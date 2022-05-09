@@ -1,0 +1,35 @@
+.container {
+    background-color: #1a1a1a;
+    height: 60px;
+    line-height: 60px;
+}
+
+.container > ul {
+    float: right;
+    list-style: none;
+    color: #C4C4C4;
+
+    margin: auto;
+}
+
+.container > ul > li {
+    display: inline;
+    margin-right: 10px;
+}
+
+.button {
+    font-size: 17px;
+    background-color: transparent;
+    color: #C4C4C4;
+    border: none;
+}
+
+.button > *{
+    margin-right: 10px;
+}
+
+.button:hover,
+.button:focus,
+.button:active {
+  color: white;
+}

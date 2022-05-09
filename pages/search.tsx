@@ -3,35 +3,32 @@ import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import type { NextPage } from 'next'
 import ArticleType from '../types/article'
-import styles from '../styles/Article.module.css'
-import Link from 'next/link'
+import Article from '../components/Article/Article'
+import styles from '../styles/Search.module.css'
+import Layout from '../components/Layout/Layout'
 
-const fetcher = url => fetch(url).then(r => r.json().then(data => data as ArticleType[]))
+const fetchArticles = (url) => fetch(url).then(r => r.json().then(data => data as ArticleType[]))
+
 
 const Search: NextPage = () => {
     const router = useRouter()
+    const { bibcode } = router.query
+
     const { data, error } = useSWR(
-        router.query.bibcode ? `${process.env.NEXT_PUBLIC_METADATA_SERVICE}/articles?bibcode=${router.query.bibcode}` : null,
-        fetcher
+        bibcode ? `${process.env.NEXT_PUBLIC_METADATA_SERVICE}/articles?bibcode=${bibcode}` : null,
+        fetchArticles
     )
 
     if (error) return <div>Failed to load articles</div>
-    if (!data) return <div>Loading...</div>
 
-    const items = data.map((article) => {
-        return (
-            <Link key={article.id} href={`/article/${article.id}`} >
-                <div className={styles.card}>
-                    <p>ID: {article.id}</p>
-                    <p>Bibcode: {article.bibcode}</p>
-                </div>
-            </Link>
-        )
-    })
 
-    return (<div className={styles.grid}>
-        {items}
-    </div>)
+    return (<Layout>
+        <div className={styles.container}>
+            <div className={styles.grid}>
+                {data ? data.map((article, i) => <Article key={i} article={article} />) : (null)}
+            </div>
+        </div>
+    </Layout>)
 
 }
 

@@ -1,0 +1,16 @@
+.container {
+    height: 150px;
+    line-height: 150px;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(44,9,121,1) 35%, rgba(0,212,255,1) 100%);
+    margin: auto;
+    text-align: center;
+}
+
+
+.container > text {
+    margin: 0;
+    color: white;
+    font-weight: 700;
+    font-size: 40px;
+}

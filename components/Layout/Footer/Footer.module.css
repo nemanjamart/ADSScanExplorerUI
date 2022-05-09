@@ -1,0 +1,15 @@
+.container {
+    position: fixed;
+    padding: 10px 10px 0px 10px;
+    bottom: 0;
+    height: 150px;
+    width: 100%;
+    line-height: 150px;
+    background-color: #484f4f;
+    margin: auto;
+    text-align: center;
+}
+
+.container > a {
+    color: white;
+}

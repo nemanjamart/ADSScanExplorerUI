@@ -1,0 +1,44 @@
+
+.container {
+    height: 40px;
+    width: 100%;
+    margin: auto;
+}
+
+.inputGroup {
+    position: relative;
+    display: inline;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.button {
+    background-color: #1c459b;
+    border-color: #1c459b;
+    height: 100%;
+    aspect-ratio: 1.1 / 1;
+    border-radius: 2px;
+    box-shadow: none;
+}
+
+.button:hover,
+.button:focus,
+.button:active {
+    box-shadow: 1px 1px 6px #595959;
+}
+
+.searchBox {
+    height: 100%;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding-left: 10px;
+}
+
+.searchBox:focus {
+    outline: none;
+}
+
+.searchBox:focus-within {
+    border: 1px solid #4073dd;
+}
