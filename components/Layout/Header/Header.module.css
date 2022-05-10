@@ -1,16 +1,33 @@
 .container {
     height: 150px;
-    line-height: 150px;
-    background: rgb(2,0,36);
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(44,9,121,1) 35%, rgba(0,212,255,1) 100%);
+    background: rgb(2, 0, 36);
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(44, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
     margin: auto;
     text-align: center;
 }
 
+.titlegroup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 70%;
+    margin: auto;
+    height: 100%;
+}
 
-.container > text {
-    margin: 0;
+.titlegroup>text {
     color: white;
     font-weight: 700;
     font-size: 40px;
+    white-space: nowrap;
+}
+
+.logoContainer {
+    margin-right: 10px;
+}
+
+.logo {
+    object-fit: contain;
+    vertical-align: middle;
 }
