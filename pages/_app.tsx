@@ -5,7 +5,6 @@ import "nprogress/nprogress.css";
 import Router from 'next/router';
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import Layout from '../components/Layout/Layout'
 
 config.autoAddCss = false
 

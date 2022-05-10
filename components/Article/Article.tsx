@@ -13,7 +13,7 @@ const Layout = ({ article }: ArticleProps) => {
         <Link href={`/article/${article.id}`} >
             <div className={styles.card}>
                 <div className={styles.grid}>
-                <Image className={styles.thumbnail} src={article.thumbnail} alt="" width={400} height={200} />
+                    <Image className={styles.thumbnail} src={article.thumbnail} alt="" width={400} height={200} />
                     <h2>{article.bibcode}</h2>
                     <p>{article.pages} pages</p>
                 </div>

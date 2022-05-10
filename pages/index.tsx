@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
 import Layout from '../components/Layout/Layout'
 import SearchBox from '../components/SearchBox/SearchBox'
 import styles from '../styles/Home.module.css'
