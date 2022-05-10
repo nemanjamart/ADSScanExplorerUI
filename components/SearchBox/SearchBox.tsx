@@ -14,7 +14,7 @@ function SearchBox() {
         <div className={styles.container}>
             <div className={styles.inputGroup}>
                 <input type="text" className={styles.searchBox} placeholder="Search bibcode" onChange={(e) => setQuery(e.target.value)} />
-                <Link href={`/search?bibcode=${query}`}>
+                <Link href={{pathname: '/search', query: {bibcode: query}}} passHref>
                     <button className={styles.button}>
                         <FontAwesomeIcon icon={faSearch} inverse />
                     </button>

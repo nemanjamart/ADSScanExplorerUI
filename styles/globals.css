@@ -19,3 +19,8 @@ text,
 a {
   color: #5D5D5D;
 }
+
+a,
+button {
+  cursor: pointer;
+}

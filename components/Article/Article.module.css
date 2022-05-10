@@ -22,6 +22,11 @@
 .card:active {
   color: #0070f3;
   border-color: #0070f3;
+  cursor: pointer;
+}
+
+.card:hover h2, .card:hover p {
+  color: #0070f3;
 }
 
 .card h2 {
