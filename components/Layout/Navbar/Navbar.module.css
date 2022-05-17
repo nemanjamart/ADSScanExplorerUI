@@ -1,15 +1,15 @@
 .container {
     background-color: #1a1a1a;
     height: 60px;
-    line-height: 60px;
+    display: inline-flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .container > ul {
-    float: right;
     list-style: none;
     color: #C4C4C4;
-
-    margin: auto;
 }
 
 .container > ul > li {
@@ -32,4 +32,28 @@
 .button:focus,
 .button:active {
   color: white;
+}
+
+.homeButton {
+    display: flex;
+    height: 60px;
+    padding: 7px;
+    align-items: center;
+    justify-content: center;
+}
+
+.homeButton:link {
+    text-decoration: none;
+}
+
+.homeButton > h1 {
+    margin: 0;
+    color: white;
+    font-size: 28px;
+}
+
+.logo {
+    height: 100%;
+    width: 60px;
+    position: relative;
 }

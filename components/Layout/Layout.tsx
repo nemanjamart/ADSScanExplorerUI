@@ -4,19 +4,20 @@ import Meta from './Meta/Meta'
 import Footer from './Footer/Footer'
 
 type Props = {
+    showHeader: boolean
     children: React.ReactNode
 }
 
-const Layout = ({ children }: Props) => {
+const Layout = ({ showHeader, children }: Props) => {
     return (
         <>
             <Meta />
             <Navbar />
-            <Header />
+            {showHeader ? <Header /> : ''}
             <div className="min-h-screen">
                 <main>{children}</main>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </>
     )
 }

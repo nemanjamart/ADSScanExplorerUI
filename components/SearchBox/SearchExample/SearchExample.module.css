@@ -1,0 +1,38 @@
+.container {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 20px 0px 20px 0px;
+    width: 100%;
+    padding: 0px 20px 20px 20px
+}
+
+.descriptionList {
+    display: inline-flex;
+    width: 100%;
+    overflow: hidden;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.descriptionList>dd {
+    float: left;
+}
+
+.descriptionList>dt {
+    float: left;
+}
+
+.textLinkButton {
+    background: 0 0;
+    text-align: left;
+    border: 1px dotted rgba(0, 0, 0, .3);
+    border-radius: 2px;
+    margin-right: 4px;
+
+}
+
+.divider {
+    height: 1px;
+    border: none;
+    background-color: #5D5D5D;
+}

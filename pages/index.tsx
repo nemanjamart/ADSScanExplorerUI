@@ -6,9 +6,9 @@ import styles from '../styles/Home.module.css'
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
-      <Layout >
+      <Layout showHeader={true}>
         <div className={styles.searchArea}>
-          <SearchBox />
+          <SearchBox showExample={true} />
         </div>
       </Layout>
     </div>

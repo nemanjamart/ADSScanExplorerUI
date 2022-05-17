@@ -16,11 +16,27 @@ h4,
 p,
 input,
 text,
-a {
+a,
+dt,
+dd,
+button,
+label {
   color: #5D5D5D;
 }
 
 a,
 button {
   cursor: pointer;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input.no-spinner::-webkit-outer-spin-button,
+input.no-spinner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number].no-spinner {
+  -moz-appearance: textfield;
 }

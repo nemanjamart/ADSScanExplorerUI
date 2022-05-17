@@ -1,31 +1,59 @@
 
-import { useRouter } from 'next/router'
+import React, { useState } from 'react';
+import Router, { useRouter } from 'next/router'
 import useSWR from 'swr'
 import type { NextPage } from 'next'
-import ArticleType from '../types/article'
-import Article from '../components/Article/Article'
+import SearchResultType from '../types/search-result'
+import SearchItem from '../components/SearchItem/SearchItem'
 import styles from '../styles/Search.module.css'
 import Layout from '../components/Layout/Layout'
-
-const fetchArticles = (url) => fetch(url).then(r => r.json().then(data => data as ArticleType[]))
-
+import Pagination from '../components/Pagination/Pagination'
+import SearchBox from '../components/SearchBox/SearchBox';
 
 const Search: NextPage = () => {
     const router = useRouter()
-    const { bibcode } = router.query
+    const { q, page, limit } = router.query
+
+    // const [myPage, setPage] = useState<number>(Number(page));
+    // const [myLimit, setLimit] = useState<number>(Number(limit));
+
+    const onPaginationChanged = (page: number, limit: number) => {
+        console.log(page)
+        router.push({
+            pathname: router.basePath,
+            query: { q: q, page: page, limit: limit },
+        }, undefined, { shallow: true })
+    }
+
+    const fetchSearchResult = (url) => fetch(url).then(r => r.json().then(data => data as SearchResultType))
+
+    const getKey = () => {
+        if (!q) return null
+        return `${process.env.NEXT_PUBLIC_METADATA_SERVICE}/search?q=${q}&page=${page}&limit=${limit}`
+    }
 
     const { data, error } = useSWR(
-        bibcode ? `${process.env.NEXT_PUBLIC_METADATA_SERVICE}/articles?bibcode=${bibcode}` : null,
-        fetchArticles
+        getKey,
+        fetchSearchResult
     )
 
     if (error) return <div>Failed to load articles</div>
+    if (!data) return <Layout showHeader={false}>Loading...</Layout>;
 
-
-    return (<Layout>
-        <div className={styles.container}>
+    return (<Layout showHeader={false}>
+        <div>
+            <div className={styles.searchHeader}>
+                <div className={styles.searchBoxContainer}>
+                    <SearchBox initialQuery={String(q)}/>
+                    <p>Your search returned <b>{data.pageCount * Number(limit)}</b> results</p>
+                </div>
+            </div>
             <div className={styles.grid}>
-                {data ? data.map((article, i) => <Article key={i} article={article} />) : (null)}
+                <div className={styles.resultsContainer}>
+                    {data.items.map((item, i) => <SearchItem key={i} item={item} />)}
+                    <Pagination page={Number(page)} limit={Number(limit)} pageCount={data.pageCount} onPaginationChanged={onPaginationChanged} />
+                </div>
+
             </div>
         </div>
     </Layout>)
