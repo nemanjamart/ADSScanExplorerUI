@@ -45,7 +45,7 @@ const Search: NextPage = () => {
             <div className={styles.searchHeader}>
                 <div className={styles.searchBoxContainer}>
                     <SearchBox initialQuery={String(q)}/>
-                    <p>Your search returned <b>{data.pageCount * Number(limit)}</b> results</p>
+                    <p>Your search returned <b>{data.total}</b> results</p>
                 </div>
             </div>
             <div className={styles.grid}>
