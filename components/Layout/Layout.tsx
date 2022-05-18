@@ -4,11 +4,11 @@ import Meta from './Meta/Meta'
 import Footer from './Footer/Footer'
 
 type Props = {
-    showHeader: boolean
+    showHeader?: boolean
     children: React.ReactNode
 }
 
-const Layout = ({ showHeader, children }: Props) => {
+const Layout = ({ showHeader = false, children }: Props) => {
     return (
         <>
             <Meta />

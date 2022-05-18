@@ -1,0 +1,49 @@
+.grid {
+    display: grid;
+    grid-template-rows: auto;
+    gap: 20;
+  }
+  
+  .card {
+    margin: 1rem;
+    padding: 0.5rem;
+    text-align: left;
+    color: inherit;
+    text-decoration: none;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+    max-width: 500px;
+    background-color: #e6e6e6;
+  }
+  
+  .card:hover,
+  .card:focus,
+  .card:active {
+    color: #0070f3;
+    border-color: #0070f3;
+    cursor: pointer;
+  }
+  
+  .card:hover h2, .card:hover p {
+    color: #0070f3;
+  }
+  
+  .card h2 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  
+  .card p {
+    margin: 0;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    text-align: center;
+  }
+  
+  .thumbnail {
+    object-fit: none;
+    object-position: 50% 0%;
+    border-radius: 10px;
+  
+  }

@@ -8,6 +8,11 @@
   box-shadow: 3px;
 }
 
+
+.gridCenter {
+  grid-column: 2;
+}
+
 .searchHeader {
   height: 150px;
   margin: auto;
@@ -37,7 +42,28 @@
   flex-wrap: wrap;
   max-width: 100%;
   background-color: white;
-  grid-column: 2;
   border: 1px solid #D8D8D8;
   margin-bottom: 50px;
+}
+
+.navTabs {
+  list-style: none;
+  color: #C4C4C4;
+}
+
+.navTabs > li {
+  display: inline;
+  margin-right: 10px;
+}
+
+
+.navButton {
+  font-size: 17px;
+  background-color: transparent;
+  color: #C4C4C4;
+  border: none;
+}
+
+.navButton:enabled {
+  color: #4073dd 
 }

@@ -18,7 +18,7 @@ const SearchBox = ({showExample = false, initialQuery = ""} : SearchBoxProps) =>
         <div className={styles.container}>
             <div className={styles.inputGroup}>
                 <input type="text" className={styles.searchBox} defaultValue={initialQuery} placeholder="Search" onChange={(e) => setQuery(e.target.value)} value={query} />
-                <Link href={{pathname: '/search', query: {q: query, page: 1, limit: 20}}} passHref>
+                <Link href={{pathname: '/search', query: {q: query, page: 1, limit: 10}}} passHref>
                     <button className={styles.button}>
                         <FontAwesomeIcon icon={faSearch} inverse />
                     </button>

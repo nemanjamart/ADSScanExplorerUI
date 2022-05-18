@@ -1,4 +1,4 @@
-type SearchItemType = {
+type ArticleType = {
     id: string
     bibcode: string
     pages: number
@@ -6,4 +6,4 @@ type SearchItemType = {
     type: string
 }
 
-export default SearchItemType
+export default ArticleType
