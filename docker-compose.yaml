@@ -1,0 +1,16 @@
+version: '3.1'
+networks:
+  ads_scan_explorer_network:
+      name: ads_scan_explorer_network
+services:
+  ads_scan_explorer_ui:
+    build: .
+    image: ads_scan_explorer_ui:latest
+    container_name: ads_scan_explorer_ui
+    volumes:
+    - ./:/app
+    ports:
+      - "3000:3000"
+    entrypoint: npm run dev
+    networks:
+      - ads_scan_explorer_network

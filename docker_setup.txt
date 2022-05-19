@@ -1,2 +1,0 @@
-docker build . -t ads_scan_explorer_ui
-docker run -p 3000:3000 --name ads_scan_explorer_ui -d ads_scan_explorer_ui 
