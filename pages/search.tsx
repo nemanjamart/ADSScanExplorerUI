@@ -68,6 +68,7 @@ const SearchResultTab = ({ tabIndex, onSearchComplete }: TabProps) => {
     if (isError) return (<><p>Sorry something went wrong</p></>)
     if (isLoading) return <PuffLoader size={150} />
     if (data.total == 0) return (<><p>Sorry no results were found for <b>{q}</b></p></>)
+    if (data.pageCount < Number(page)) onPaginationChanged(1, Number(limit))
 
     onSearchComplete(data.total)
 
