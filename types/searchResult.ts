@@ -5,8 +5,7 @@ type SearchResultType = {
     page: number
     pageCount: number
     total: number
-    articles: ArticleType[]
-    collections: CollectionType[]
+    items: ArticleType[] | CollectionType[]
 }
 
 export default SearchResultType

@@ -1,54 +1,30 @@
 
-import React, { useState, useEffect } from 'react';
-import Router, { useRouter } from 'next/router'
-import useSWR from 'swr'
+import React, { useState } from 'react';
+import { useRouter } from 'next/router'
 import type { NextPage } from 'next'
-import SearchResultType from '../types/searchResult'
 import Article from '../components/Article/Article'
 import Collection from '../components/Collection/Collection'
 import styles from '../styles/Search.module.css'
 import Layout from '../components/Layout/Layout'
 import Pagination from '../components/Pagination/Pagination'
 import SearchBox from '../components/SearchBox/SearchBox';
+import useSearch from '../hooks/useSearch';
+import { PuffLoader } from 'react-spinners';
 
 const Search: NextPage = () => {
-    const router = useRouter()
-    const { q, page, limit } = router.query
-
-    const onPaginationChanged = (page: number, limit: number) => {
-        console.log(page)
-        router.push({
-            pathname: router.basePath,
-            query: { q: q, page: page, limit: limit },
-        }, undefined, { shallow: true })
-    }
-
-    const fetchSearchResult = (url) => fetch(url).then(r => r.json().then(data => data as SearchResultType))
-
-    const getKey = () => {
-        if (!q) return null
-        return `${process.env.NEXT_PUBLIC_METADATA_SERVICE}/search?q=${q}&page=${page}&limit=${limit}`
-    }
-
-    const { data, error } = useSWR(
-        getKey,
-        fetchSearchResult
-    )
-
     const [tabIndex, setTabIndex] = useState<boolean>(true)
+    const [itemCount, setItemCount] = useState<number>(0)
 
-
-
-
-    if (error) return <div>Failed to load articles</div>
-    if (!data) return <Layout showHeader={false}>Loading...</Layout>;
+    const onSearchComplete = (itemCount: number) => {
+        setItemCount(itemCount)
+    }
 
     return (<Layout showHeader={false}>
         <div>
             <div className={styles.searchHeader}>
                 <div className={styles.searchBoxContainer}>
-                    <SearchBox initialQuery={String(q)} />
-                    <p>Your search returned <b>{data.total}</b> results</p>
+                    <SearchBox />
+                    <p>Your search returned <b>{itemCount}</b> results</p>
                 </div>
             </div>
             <div className={styles.grid}>
@@ -62,8 +38,7 @@ const Search: NextPage = () => {
                         </li>
                     </ul>
                     <div className={styles.resultsContainer}>
-                        {tabIndex ? data.articles.map((article, i) => <Article key={i} article={article} />) : data.collections.map((collection, i) => <Collection key={i} collection={collection} />)}
-                        {tabIndex ? <Pagination page={Number(page)} limit={Number(limit)} pageCount={data.pageCount} onPaginationChanged={onPaginationChanged} /> : ''}
+                        <SearchResultTab tabIndex={tabIndex} onSearchComplete={onSearchComplete} />
                     </div>
                 </div>
             </div>
@@ -71,5 +46,39 @@ const Search: NextPage = () => {
     </Layout>)
 
 }
+
+interface TabProps {
+    tabIndex: boolean
+    onSearchComplete(total: number)
+}
+
+const SearchResultTab = ({ tabIndex, onSearchComplete }: TabProps) => {
+    const router = useRouter()
+    const { q, page, limit } = router.query
+    const { data, isLoading, isError } = useSearch(q, page, limit, tabIndex ? 'article' : 'collection')
+
+    const onPaginationChanged = (page: number, limit: number) => {
+        router.push({
+            pathname: router.basePath,
+            query: { q: q, page: page, limit: limit },
+        }, undefined, { shallow: true })
+    }
+
+
+    if (isError) return (<><p>Sorry something went wrong</p></>)
+    if (isLoading) return <PuffLoader size={150} />
+    if (data.total == 0) return (<><p>Sorry no results were found for <b>{q}</b></p></>)
+
+    onSearchComplete(data.total)
+
+    return (
+        <>
+            {data.items.map((item, i) => tabIndex ? <Article key={i} article={item} /> : <Collection key={i} collection={item} />)}
+            < Pagination page={Number(page)} limit={Number(limit)} pageCount={data.pageCount} onPaginationChanged={onPaginationChanged} />
+        </>
+    )
+}
+
+
 
 export default Search
