@@ -3,7 +3,7 @@
   justify-content: center;
   flex-direction: column;
   background-color: #e8e8e8;
-  grid-template-columns: 33% 33% 33%;
+  grid-template-columns: 30% 40% 30%;
   padding-top: 50px;
   box-shadow: 3px;
 }

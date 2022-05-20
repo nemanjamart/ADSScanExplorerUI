@@ -10,9 +10,15 @@ import Pagination from '../components/Pagination/Pagination'
 import SearchBox from '../components/SearchBox/SearchBox';
 import useSearch from '../hooks/useSearch';
 import { PuffLoader } from 'react-spinners';
+import Page from '../components/Page/Page';
+import TabType from '../types/tab';
+
+const ArticleTab: TabType = { name: 'article', render: (index, item) => { return <Article key={index} article={item} /> } }
+const CollectionTab: TabType = { name: 'collection', render: (index, item) => { return <Collection key={index} collection={item} /> } }
+const PageTab: TabType = { name: 'page', render: (index, item) => { return <Page key={index} page={item} /> } }
 
 const Search: NextPage = () => {
-    const [tabIndex, setTabIndex] = useState<boolean>(true)
+    const [tab, setTab] = useState<TabType>(ArticleTab)
     const [itemCount, setItemCount] = useState<number>(0)
 
     const onSearchComplete = (itemCount: number) => {
@@ -31,14 +37,17 @@ const Search: NextPage = () => {
                 <div className={styles.gridCenter}>
                     <ul className={styles.navTabs}>
                         <li>
-                            <button className={styles.navButton} disabled={tabIndex} onClick={() => setTabIndex(true)}>Articles</button>
+                            <button className={styles.navButton} disabled={tab == ArticleTab} onClick={() => setTab(ArticleTab)}>Articles</button>
                         </li>
                         <li>
-                            <button className={styles.navButton} disabled={!tabIndex} onClick={() => setTabIndex(false)}>Collections</button>
+                            <button className={styles.navButton} disabled={tab == CollectionTab} onClick={() => setTab(CollectionTab)}>Collections</button>
+                        </li>
+                        <li>
+                            <button className={styles.navButton} disabled={tab == PageTab} onClick={() => setTab(PageTab)}>Pages</button>
                         </li>
                     </ul>
                     <div className={styles.resultsContainer}>
-                        <SearchResultTab tabIndex={tabIndex} onSearchComplete={onSearchComplete} />
+                        <SearchResultTab tab={tab} onSearchComplete={onSearchComplete} />
                     </div>
                 </div>
             </div>
@@ -48,14 +57,14 @@ const Search: NextPage = () => {
 }
 
 interface TabProps {
-    tabIndex: boolean
+    tab: TabType
     onSearchComplete(total: number)
 }
 
-const SearchResultTab = ({ tabIndex, onSearchComplete }: TabProps) => {
+const SearchResultTab = ({ tab, onSearchComplete }: TabProps) => {
     const router = useRouter()
     const { q, page, limit } = router.query
-    const { data, isLoading, isError } = useSearch(q, page, limit, tabIndex ? 'article' : 'collection')
+    const { data, isLoading, isError } = useSearch(q, page, limit, tab.name)
 
     const onPaginationChanged = (page: number, limit: number) => {
         router.push({
@@ -74,7 +83,7 @@ const SearchResultTab = ({ tabIndex, onSearchComplete }: TabProps) => {
 
     return (
         <>
-            {data.items.map((item, i) => tabIndex ? <Article key={i} article={item} /> : <Collection key={i} collection={item} />)}
+            {data.items.map((item, i) => tab.render(i, item))}
             < Pagination page={Number(page)} limit={Number(limit)} pageCount={data.pageCount} onPaginationChanged={onPaginationChanged} />
         </>
     )

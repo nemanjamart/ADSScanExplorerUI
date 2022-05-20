@@ -12,7 +12,12 @@ const SearchExample = ({ onExampleSelected }: SearchExampleProps) => {
         <div className={styles.container}>
             <p>Search examples</p>
             <hr className={styles.divider} />
-            <DescriptionListItem onExampleSelected={onExampleSelected} title={"publication"} example={"bibstem:ApJ"} />
+            <div className={styles.descriptionListGrid}>
+                <DescriptionListItem onExampleSelected={onExampleSelected} title={"publication"} example={"bibstem:ApJ"} />
+                <DescriptionListItem onExampleSelected={onExampleSelected} title={"volume"} example={"bibstem:ApJ + volume:333"} />
+                <DescriptionListItem onExampleSelected={onExampleSelected} title={"article"} example={"bibcode:1988ApJ...333L..69M"} />
+                <DescriptionListItem onExampleSelected={onExampleSelected} title={"page type"} example={"journal:adga + pagetype:FrontMatter"} />
+            </div>
         </div>
     )
 }
@@ -25,9 +30,9 @@ interface DescriptionListItem {
 
 const DescriptionListItem = ({ onExampleSelected, title, example }: DescriptionListItem) => {
     return (
-        <dl className={styles.descriptionList}>
-            <dt>{title}</dt>
-            <dd >
+        <dl className={styles.descriptionListItem}>
+            <dt className={styles.descriptionListTitle}>{title}</dt>
+            <dd className={styles.descriptionListValue}>
                 <DescriptionListButton onExampleSelected={onExampleSelected} example={example} />
             </dd>
         </dl>)

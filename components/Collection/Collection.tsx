@@ -7,7 +7,7 @@ type CollectionProps = {
     collection: CollectionType
 }
 
-const SearchItem = ({ collection }: CollectionProps) => {
+const Collection = ({ collection }: CollectionProps) => {
 
     return (
         <Link href={`/manifest/${collection.id}`} >
@@ -22,4 +22,4 @@ const SearchItem = ({ collection }: CollectionProps) => {
     )
 }
 
-export default SearchItem
+export default Collection

@@ -7,7 +7,7 @@ type ArticleProps = {
     article: ArticleType
 }
 
-const SearchItem = ({ article }: ArticleProps) => {
+const Article = ({ article }: ArticleProps) => {
 
     return (
         <Link href={`/manifest/${article.id}`} >
@@ -22,4 +22,4 @@ const SearchItem = ({ article }: ArticleProps) => {
     )
 }
 
-export default SearchItem
+export default Article
