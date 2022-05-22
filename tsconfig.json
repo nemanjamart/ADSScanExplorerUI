@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/Mirador/mirador.js", "components/Mirador/Mirador.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/Mirador/mirador.js"],
   "exclude": ["node_modules"]
 }
