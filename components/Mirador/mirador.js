@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import mirador from "mirador";
+import mirador from 'mirador/dist/es/src/index';
+import { miradorImageToolsPlugin } from 'mirador-image-tools';
+
 
 class Mirador extends Component {
   constructor(props) {
@@ -8,7 +10,7 @@ class Mirador extends Component {
   }
   componentDidMount() {
     const { config, plugins } = this.props;
-    this.miradorInstance = mirador.viewer(config, plugins);
+    this.miradorInstance = mirador.viewer(config, [...miradorImageToolsPlugin]);
     // Example of subscribing to state
     // this.miradorInstance.store.subscribe(() => {
     //   let state = this.miradorInstance.store.getState();
