@@ -1,0 +1,22 @@
+
+.miradorContainer {
+    /* 100% - searchHeader height */
+    height: calc(100% - 80px); 
+}
+
+.searchHeader {
+    height: 80px;
+    margin: auto;
+    text-align: center;
+    box-shadow: 0 3px 4px #d9d9d9;
+    border-bottom: 1px solid #D8D8D8;
+  }
+  
+  .searchBoxContainer {
+    width: 40%;
+    display: flex;
+    justify-content: left;
+    margin: auto;
+    padding: 20px;
+    flex-direction: column;
+  }

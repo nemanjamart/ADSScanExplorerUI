@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import styles from "./Mirador.module.css"
 
 export default function Mirador({ config }) {
     useEffect(() => {
@@ -18,6 +19,6 @@ export default function Mirador({ config }) {
     }, [config]);
 
     return (
-        <div id={config.id} />
+        <div id={config.id} className={styles.viewer} />
     );
 }

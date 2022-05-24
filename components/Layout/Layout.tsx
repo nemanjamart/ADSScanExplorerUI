@@ -2,6 +2,7 @@ import Navbar from './Navbar/Navbar'
 import Header from './Header/Header'
 import Meta from './Meta/Meta'
 import Footer from './Footer/Footer'
+import styles from './Layout.module.css'
 
 type Props = {
     showHeader?: boolean
@@ -14,9 +15,7 @@ const Layout = ({ showHeader = false, children }: Props) => {
             <Meta />
             <Navbar />
             {showHeader ? <Header /> : ''}
-            <div className="min-h-screen">
-                <main>{children}</main>
-            </div>
+            <main className={styles.mainContent}>{children}</main>
             {/* <Footer /> */}
         </>
     )
