@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import Mirador from '../../../components/Mirador/MiradorViewer'
+import Mirador from '../../../components/Mirador/Mirador'
 import { useRouter } from 'next/router'
 import React from 'react';
 import Layout from '../../../components/Layout/Layout'
