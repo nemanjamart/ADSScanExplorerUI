@@ -53,7 +53,8 @@
 }
 
 .logo {
-    height: 100%;
-    width: 60px;
-    position: relative;
+    width: 50px;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-right: 5px;
 }
