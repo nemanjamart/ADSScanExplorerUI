@@ -4,7 +4,7 @@ import SearchBox from '../SearchBox/SearchBox';
 import styles from './ManifestViewer.module.css'
 import Layout from '../Layout/Layout';
 
-type ManifestProps = {
+interface ManifestProps {
     manifestId: string
     pageNum?: number
 }
@@ -14,6 +14,7 @@ const ManifestViewer = ({ manifestId, pageNum = 1 }: ManifestProps) => {
     const config = {
         id: 'ads_mirador_viewer',
         windows: [{
+            imageToolsEnabled: true,
             loadedManifest: `${process.env.NEXT_PUBLIC_MANIFEST_SERVICE}/${manifestId}/manifest.json`,
             canvasIndex: Number(pageNum) - 1
         }]
