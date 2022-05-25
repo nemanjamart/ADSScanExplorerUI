@@ -7,7 +7,7 @@ const Header = () => {
         <header className={styles.container}>
             <div className={styles.titlegroup}>
                 <div className={styles.logoContainer}>
-                    <Image className={styles.logo} src="/assets/ads.svg" alt={"ADS logotype"} width={80} height={80} />
+                    <Image className={styles.logo} src="/scan/assets/ads.svg" alt={"ADS logotype"} width={80} height={80} />
                 </div>
                 <text>ADS Scan Explorer</text>
             </div>
