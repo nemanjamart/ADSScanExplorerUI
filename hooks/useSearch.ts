@@ -1,9 +1,6 @@
 import useSWR from "swr"
 import SearchResultType from "../types/searchResult"
-import getConfig from 'next/config'
 
-
-const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
 const fetcher = (url) => fetch(url).then(r => r.json().then(data => data as SearchResultType))
 
 function useSearch(q, page, limit, type) {

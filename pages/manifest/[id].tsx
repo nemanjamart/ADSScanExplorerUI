@@ -23,14 +23,13 @@ const Manifest: NextPage = (config) => {
 
 export async function getServerSideProps(context) {
     const { id, p = 1 } = context.query;
-    const { serverRuntimeConfig } = getConfig()
 
     return {
         props: {
             id: 'ads_mirador_viewer',
             windows: [{
                 imageToolsEnabled: true,
-                loadedManifest: `/scan/api/manifest?id=${id}`,
+                loadedManifest: `${process.env.NEXT_PUBLIC_BASE_PATH}/api/manifest?id=${id}`,
                 canvasIndex: Number(p) - 1
             }]
         }
