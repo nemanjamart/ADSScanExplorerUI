@@ -4,13 +4,12 @@ networks:
       name: ads_scan_explorer_network
 services:
   ads_scan_explorer_ui:
-    build: .
+    container_name: "ads_scan_explorer_ui"
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
     image: ads_scan_explorer_ui:latest
-    container_name: ads_scan_explorer_ui
     volumes:
     - ./:/app
-    ports:
-      - "3000:3000"
-    entrypoint: npm run dev
     networks:
       - ads_scan_explorer_network

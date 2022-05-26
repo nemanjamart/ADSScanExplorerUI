@@ -1,23 +1,40 @@
 import type { NextPage } from 'next'
-import { useRouter } from 'next/router'
 import React from 'react';
 import Layout from '../../components/Layout/Layout'
-import { PuffLoader } from 'react-spinners';
-import ManifestViewer from '../../components/ManifestViewer/ManifestViewer';
+import getConfig from 'next/config'
+import SearchBox from '../../components/SearchBox/SearchBox';
+import styles from '../../styles/Manifest.module.css'
+import Mirador from '../../components/Mirador/Mirador';
 
-const Manifest: NextPage = () => {
-    const router = useRouter()
-    const { id } = router.query
+const Manifest: NextPage = (config) => {
+    return (
+        <Layout>
+            <div className={styles.searchHeader}>
+                <div className={styles.searchBoxContainer}>
+                    <SearchBox />
+                </div>
+            </div>
+            <div className={styles.miradorContainer}>
+                <Mirador config={config} />
+            </div>
+        </Layout>)
+}
 
-    if (!id) {
-        return (
-            <Layout>
-                <PuffLoader size={150} />
-            </Layout>
-        )
+
+export async function getServerSideProps(context) {
+    const { id, p = 1 } = context.query;
+    const { serverRuntimeConfig } = getConfig()
+
+    return {
+        props: {
+            id: 'ads_mirador_viewer',
+            windows: [{
+                imageToolsEnabled: true,
+                loadedManifest: `/scan/api/manifest?id=${id}`,
+                canvasIndex: Number(p) - 1
+            }]
+        }
     }
-
-    return <ManifestViewer manifestId={String(id)} />
 }
 
 export default Manifest

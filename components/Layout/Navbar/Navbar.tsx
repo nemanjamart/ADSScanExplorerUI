@@ -11,7 +11,7 @@ const Navbar: FC<{}> = () => {
             <Link href={'/'}>
                 <a className={styles.homeButton}>
                     <div className={styles.logo}>
-                        <Image src="/scan/assets/ads.svg" alt={"ADS logotype"} width={80} height={80} layout='responsive'  />
+                        <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH}/assets/ads.svg`} alt={"ADS logotype"} width={80} height={80} layout='responsive'  />
                     </div>
                     <h1>
                         <b>ads</b>

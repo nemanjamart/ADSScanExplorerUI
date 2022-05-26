@@ -1,10 +1,10 @@
 # ADSScanExplorerUI
-## Logic
+
+## Configuration
+Configure environment variables, ports and such in the `./docker/{environment}.yaml` files.
 ## Setup
 
-### ADSScanExplorerUI
-
-Start the service by running the docker compose. Make sure to set the correct urls to the backend in the .env.local
+Create the container and start the application by running docker compose with environment specific settings.
 ```
-docker compose -f docker-compose.yaml up -d
+docker compose -f docker/docker-compose.yaml -f docker/{environment}.yaml up -d
 ```
