@@ -14,6 +14,7 @@ interface SearchBoxProps {
 
 const SearchBox = ({ showExample = false }: SearchBoxProps) => {
     const [query, setQuery] = useState<string>("");
+    const router = useRouter()
 
     useEffect(() => {
         sessionStorage.setItem('queryState', query)
@@ -26,11 +27,20 @@ const SearchBox = ({ showExample = false }: SearchBoxProps) => {
         }
     }, [])
 
+
+    const hrefSearch = { pathname: '/search', query: { q: query, page: 1, limit: 10 } }
+    
+    const onKeyDown = (e) => {
+        if (e.key == "Enter") {
+            router.push(hrefSearch)
+        }
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.inputGroup}>
-                <input type="text" className={styles.searchBox} placeholder="Search" onChange={(e) => setQuery(e.target.value)} value={query} />
-                <Link href={{ pathname: '/search', query: { q: query, page: 1, limit: 10 } }} passHref>
+                <input type="text" className={styles.searchBox} placeholder="Search" onChange={(e) => setQuery(e.target.value)} value={query} onKeyDown={onKeyDown} />
+                <Link href={hrefSearch} passHref>
                     <button className={styles.button}>
                         <FontAwesomeIcon icon={faSearch} inverse />
                     </button>
