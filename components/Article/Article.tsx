@@ -13,7 +13,7 @@ const Article = ({ article }: ArticleProps) => {
         <Link href={`/manifest/${article.id}`} >
             <div className={styles.card}>
                 <div className={styles.grid}>
-                    <Image className={styles.thumbnail} src={article.thumbnail} alt="" width={400} height={200} />
+                    <Image className={styles.thumbnail} src={article.thumbnail} alt="Article thumbnail" width={400} height={200} unoptimized/>
                     <h2>{article.bibcode}</h2>
                     <p>{article.pages} pages</p>
                 </div>

@@ -13,7 +13,7 @@ const Collection = ({ collection }: CollectionProps) => {
         <Link href={`/manifest/${collection.id}`} >
             <div className={styles.card}>
                 <div className={styles.grid}>
-                    <Image className={styles.thumbnail} src={collection.thumbnail} alt="" width={400} height={200} />
+                    <Image className={styles.thumbnail} src={collection.thumbnail} alt="Collection thumbnail" width={400} height={200} unoptimized/>
                     <h2>{collection.journal}{collection.volume}</h2>
                     <p>{collection.pages} pages</p>
                 </div>
