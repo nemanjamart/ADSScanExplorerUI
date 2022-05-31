@@ -1,12 +1,24 @@
 import type { NextPage } from 'next'
-import React from 'react';
 import Layout from '../../components/Layout/Layout'
 import getConfig from 'next/config'
 import SearchBox from '../../components/SearchBox/SearchBox';
 import styles from '../../styles/Manifest.module.css'
 import Mirador from '../../components/Mirador/Mirador';
 
-const Manifest: NextPage = (config) => {
+const { publicRuntimeConfig } = getConfig()
+
+const Manifest: NextPage = (props) => {
+
+    const config = {
+        id: 'ads_mirador_viewer',
+        windows: [{
+            imageToolsEnabled: true,
+            loadedManifest: `${publicRuntimeConfig.publicManifestServiceUrl}/${props['id']}/manifest.json`,
+            canvasIndex: Number(props['page']) - 1
+        }]
+    }
+
+
     return (
         <Layout>
             <div className={styles.searchHeader}>
@@ -20,20 +32,9 @@ const Manifest: NextPage = (config) => {
         </Layout>)
 }
 
-
-export async function getServerSideProps(context) {
-    const { id, p = 1 } = context.query;
-
-    return {
-        props: {
-            id: 'ads_mirador_viewer',
-            windows: [{
-                imageToolsEnabled: true,
-                loadedManifest: `${process.env.NEXT_PUBLIC_BASE_PATH}/api/manifest?id=${id}`,
-                canvasIndex: Number(p) - 1
-            }]
-        }
-    }
+Manifest.getInitialProps = async ({ query }) => {
+    const { id, p = 1 } = query;
+    return { id: id, page: p }
 }
 
 export default Manifest

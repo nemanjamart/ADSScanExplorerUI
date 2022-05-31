@@ -47,3 +47,7 @@ input.no-spinner::-webkit-inner-spin-button {
 input[type=number].no-spinner {
   -moz-appearance: textfield;
 }
+
+.mirador-canvas-nav {
+  max-height: 100px;
+}

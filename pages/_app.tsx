@@ -5,6 +5,7 @@ import "nprogress/nprogress.css";
 import Router from 'next/router';
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
+import App from 'next/app'
 
 config.autoAddCss = false
 
@@ -22,6 +23,15 @@ Router.events.on('routeChangeError', () => NProgress.done());
 
 function MyApp({ Component, pageProps }: AppProps) {
   return <Component {...pageProps} />
+}
+
+// Need entire app to be SSR due to the nature of docker setup
+// with runtime configurations that change with the environment.
+MyApp.getInitialProps = async (appContext) => {
+  // calls page's `getInitialProps` and fills `appProps.pageProps`
+  const appProps = await App.getInitialProps(appContext);
+
+  return { ...appProps }
 }
 
 export default MyApp

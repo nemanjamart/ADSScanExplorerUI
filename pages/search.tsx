@@ -68,7 +68,7 @@ const SearchResultTab = ({ tab, onSearchComplete }: TabProps) => {
 
     const onPaginationChanged = (page: number, limit: number) => {
         router.push({
-            pathname: router.basePath,
+            pathname: '/search',
             query: { q: q, page: page, limit: limit },
         }, undefined, { shallow: true })
     }

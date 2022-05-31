@@ -7,9 +7,12 @@ const nextConfig = {
     domains: ['localhost'],
   },
   serverRuntimeConfig: {
-    manifestServiceUrl: process.env.MANIFEST_SERVICE_URL,
-    metadataServiceUrl: process.env.METADATA_SERVICE_URL,
-    imageApiUrl: process.env.IMAGE_SERVER_URL,
+    manifestServiceUrl: `${process.env.SCAN_SERVICE_URL}/manifest`,
+    metadataServiceUrl: `${process.env.SCAN_SERVICE_URL}/metadata`,
+  },
+  publicRuntimeConfig: {
+    publicManifestServiceUrl: `${process.env.PUBLIC_SCAN_SERVICE_URL}/manifest`,
+    publicMetadataServiceUrl: `${process.env.PUBLIC_SCAN_SERVICE_URL}/metadata`,
   },
 }
 
