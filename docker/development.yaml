@@ -1,8 +1,9 @@
 services:
   ads_scan_explorer_ui:
     ports:
-      - "3000:3000"
+      - "8000:8000"
     entrypoint: npm run dev
     environment:
       - SCAN_SERVICE_URL=http://ads_scan_explorer_service:8181
       - PUBLIC_SCAN_SERVICE_URL=http://localhost:8181
+      - PUBLIC_BOOTSTRAP_SERVICE_URL=https://dev.adsabs.harvard.edu/v1/accounts/bootstrap

@@ -13,6 +13,7 @@ const nextConfig = {
   publicRuntimeConfig: {
     publicManifestServiceUrl: `${process.env.PUBLIC_SCAN_SERVICE_URL}/manifest`,
     publicMetadataServiceUrl: `${process.env.PUBLIC_SCAN_SERVICE_URL}/metadata`,
+    publicBootstrapServiceUrl: `${process.env.PUBLIC_BOOTSTRAP_SERVICE_URL}`,
   },
 }
 

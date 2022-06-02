@@ -9,7 +9,7 @@ const Header = () => {
                 <div className={styles.logoContainer}>
                     <Image className={styles.logo} src={`${process.env.NEXT_PUBLIC_BASE_PATH}/assets/ads.svg`} alt={"ADS logotype"} width={80} height={80} />
                 </div>
-                <text>ADS Scan Explorer</text>
+                <p className={styles.titleText}>ADS Scan Explorer</p>
             </div>
         </header>
     )

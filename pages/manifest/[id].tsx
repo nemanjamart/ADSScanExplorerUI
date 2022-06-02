@@ -4,10 +4,12 @@ import getConfig from 'next/config'
 import SearchBox from '../../components/SearchBox/SearchBox';
 import styles from '../../styles/Manifest.module.css'
 import Mirador from '../../components/Mirador/Mirador';
+import useBootstrap from '../../hooks/useBootstrap';
 
 const { publicRuntimeConfig } = getConfig()
 
 const Manifest: NextPage = (props) => {
+    const { data: authData } = useBootstrap()
 
     const config = {
         id: 'ads_mirador_viewer',
@@ -16,7 +18,16 @@ const Manifest: NextPage = (props) => {
             loadedManifest: `${publicRuntimeConfig.publicManifestServiceUrl}/${props['id']}/manifest.json`,
             canvasIndex: Number(props['page']) - 1,
             defaultSearchQuery: props['query']
-        }]
+        }],
+        requests: {
+            preprocessors: [
+                (url, options) => (url.match(publicRuntimeConfig.publicManifestServiceUrl) && ({
+                    ...options, headers: {
+                        Authorization: `${authData?.token_type} ${authData?.access_token}`
+                    }
+                }))
+            ]
+        }
     }
 
 

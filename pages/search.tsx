@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import type { NextPage } from 'next'
 import Article from '../components/Article/Article'
@@ -8,13 +8,17 @@ import styles from '../styles/Search.module.css'
 import Layout from '../components/Layout/Layout'
 import Pagination from '../components/Pagination/Pagination'
 import SearchBox from '../components/SearchBox/SearchBox';
-import useSearch from '../hooks/useSearch';
 import { PuffLoader } from 'react-spinners';
 import Page from '../components/Page/Page';
 import TabType from '../types/tab';
+import useScanService from '../hooks/useScanService';
+import SearchResultType from '../types/searchResult';
+import getConfig from 'next/config'
 
-const ArticleTab: TabType = { name: 'article', render: (index, item, query) => { return <Article key={index} article={item} query={query}/> } }
-const CollectionTab: TabType = { name: 'collection', render: (index, item, query) => { return <Collection key={index} collection={item} query={query}/> } }
+const { publicRuntimeConfig } = getConfig()
+
+const ArticleTab: TabType = { name: 'article', render: (index, item, query) => { return <Article key={index} article={item} query={query} /> } }
+const CollectionTab: TabType = { name: 'collection', render: (index, item, query) => { return <Collection key={index} collection={item} query={query} /> } }
 const PageTab: TabType = { name: 'page', render: (index, item, query) => { return <Page key={index} page={item} /> } }
 
 const Search: NextPage = () => {
@@ -64,7 +68,10 @@ interface TabProps {
 const SearchResultTab = ({ tab, onSearchComplete }: TabProps) => {
     const router = useRouter()
     const { q, page, limit } = router.query
-    const { data, isLoading, isError } = useSearch(q, page, limit, tab.name)
+    // const key = `${process.env.NEXT_PUBLIC_METADATA_SERVICE}/${type}/search?q=${q}&page=${page}&limit=${limit}`
+    const url = `${publicRuntimeConfig.publicMetadataServiceUrl}/${tab.name}/search`
+    const queries = { q: q, page: page, limit: limit }
+    const { data, isLoading, isError } = useScanService<SearchResultType>(url, queries)
 
     const onPaginationChanged = (page: number, limit: number) => {
         router.push({
@@ -73,13 +80,18 @@ const SearchResultTab = ({ tab, onSearchComplete }: TabProps) => {
         }, undefined, { shallow: true })
     }
 
+    useEffect(() => {
+        if (data) {
+            onSearchComplete(data.total)
+        }
+    }, [onSearchComplete, data])
 
     if (isError) return (<><p>Sorry something went wrong</p></>)
     if (isLoading) return <PuffLoader size={150} />
     if (data.total == 0) return (<><p>Sorry no results were found for <b>{q}</b></p></>)
     if (data.pageCount < Number(page)) onPaginationChanged(1, Number(limit))
 
-    onSearchComplete(data.total)
+
 
     return (
         <>
