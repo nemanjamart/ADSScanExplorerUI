@@ -1,6 +1,6 @@
 type TabType = {
     name: string
-    render(index, item)
+    render(index, item, contentQuery)
 }
 
 export default TabType

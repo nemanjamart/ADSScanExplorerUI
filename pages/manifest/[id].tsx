@@ -14,7 +14,8 @@ const Manifest: NextPage = (props) => {
         windows: [{
             imageToolsEnabled: true,
             loadedManifest: `${publicRuntimeConfig.publicManifestServiceUrl}/${props['id']}/manifest.json`,
-            canvasIndex: Number(props['page']) - 1
+            canvasIndex: Number(props['page']) - 1,
+            defaultSearchQuery: props['query']
         }]
     }
 
@@ -33,8 +34,8 @@ const Manifest: NextPage = (props) => {
 }
 
 Manifest.getInitialProps = async ({ query }) => {
-    const { id, p = 1 } = query;
-    return { id: id, page: p }
+    const { id, q = '', p = 1 } = query;
+    return { id: id, query: q, page: p }
 }
 
 export default Manifest

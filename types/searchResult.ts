@@ -7,6 +7,7 @@ type SearchResultType = {
     pageCount: number
     total: number
     items: ArticleType[] | CollectionType[] | PageType[]
+    query: string
 }
 
 export default SearchResultType

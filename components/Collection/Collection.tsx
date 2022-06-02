@@ -5,12 +5,13 @@ import Image from 'next/image'
 
 type CollectionProps = {
     collection: CollectionType
+    query: string
 }
 
-const Collection = ({ collection }: CollectionProps) => {
+const Collection = ({ collection, query }: CollectionProps) => {
 
     return (
-        <Link href={`/manifest/${collection.id}`} >
+        <Link href={{pathname: `/manifest/${collection.id}`, query: query}} >
             <div className={styles.card}>
                 <div className={styles.grid}>
                     <Image className={styles.thumbnail} src={collection.thumbnail} alt="Collection thumbnail" width={400} height={200} unoptimized/>

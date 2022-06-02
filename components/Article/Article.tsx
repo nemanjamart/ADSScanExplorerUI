@@ -5,12 +5,13 @@ import Image from 'next/image'
 
 type ArticleProps = {
     article: ArticleType
+    query: string
 }
 
-const Article = ({ article }: ArticleProps) => {
+const Article = ({ article, query }: ArticleProps) => {
 
     return (
-        <Link href={`/manifest/${article.id}`} >
+        <Link href={{pathname: `/manifest/${article.id}`, query: query ? {q: query} : ''}} >
             <div className={styles.card}>
                 <div className={styles.grid}>
                     <Image className={styles.thumbnail} src={article.thumbnail} alt="Article thumbnail" width={400} height={200} unoptimized/>

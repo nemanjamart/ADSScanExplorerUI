@@ -13,9 +13,9 @@ import { PuffLoader } from 'react-spinners';
 import Page from '../components/Page/Page';
 import TabType from '../types/tab';
 
-const ArticleTab: TabType = { name: 'article', render: (index, item) => { return <Article key={index} article={item} /> } }
-const CollectionTab: TabType = { name: 'collection', render: (index, item) => { return <Collection key={index} collection={item} /> } }
-const PageTab: TabType = { name: 'page', render: (index, item) => { return <Page key={index} page={item} /> } }
+const ArticleTab: TabType = { name: 'article', render: (index, item, query) => { return <Article key={index} article={item} query={query}/> } }
+const CollectionTab: TabType = { name: 'collection', render: (index, item, query) => { return <Collection key={index} collection={item} query={query}/> } }
+const PageTab: TabType = { name: 'page', render: (index, item, query) => { return <Page key={index} page={item} /> } }
 
 const Search: NextPage = () => {
     const [tab, setTab] = useState<TabType>(ArticleTab)
@@ -83,7 +83,7 @@ const SearchResultTab = ({ tab, onSearchComplete }: TabProps) => {
 
     return (
         <>
-            {data.items.map((item, i) => tab.render(i, item))}
+            {data.items.map((item, i) => tab.render(i, item, data.query))}
             < Pagination page={Number(page)} limit={Number(limit)} pageCount={data.pageCount} onPaginationChanged={onPaginationChanged} />
         </>
     )
