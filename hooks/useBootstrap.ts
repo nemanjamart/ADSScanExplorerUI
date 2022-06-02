@@ -13,7 +13,7 @@ const fetchAuthWithCookies = (url, cookies) =>
 function useBootstrap() {
 
     const cookies = getCookies({ httpOnly: true });
-    const { data, error } = useSWR([publicRuntimeConfig.publicBootstrapServiceUrl, cookies], fetchAuthWithCookies)
+    const { data, error } = useSWR([publicRuntimeConfig.bootstrapServiceUrl, cookies], fetchAuthWithCookies)
 
     return {
         data: data,

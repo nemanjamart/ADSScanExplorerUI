@@ -68,8 +68,7 @@ interface TabProps {
 const SearchResultTab = ({ tab, onSearchComplete }: TabProps) => {
     const router = useRouter()
     const { q, page, limit } = router.query
-    // const key = `${process.env.NEXT_PUBLIC_METADATA_SERVICE}/${type}/search?q=${q}&page=${page}&limit=${limit}`
-    const url = `${publicRuntimeConfig.publicMetadataServiceUrl}/${tab.name}/search`
+    const url = `${publicRuntimeConfig.metadataServiceUrl}/${tab.name}/search`
     const queries = { q: q, page: page, limit: limit }
     const { data, isLoading, isError } = useScanService<SearchResultType>(url, queries)
 

@@ -15,13 +15,13 @@ const Manifest: NextPage = (props) => {
         id: 'ads_mirador_viewer',
         windows: [{
             imageToolsEnabled: true,
-            loadedManifest: `${publicRuntimeConfig.publicManifestServiceUrl}/${props['id']}/manifest.json`,
+            loadedManifest: `${publicRuntimeConfig.manifestServiceUrl}/${props['id']}/manifest.json`,
             canvasIndex: Number(props['page']) - 1,
             defaultSearchQuery: props['query']
         }],
         requests: {
             preprocessors: [
-                (url, options) => (url.match(publicRuntimeConfig.publicManifestServiceUrl) && ({
+                (url, options) => (url.match(publicRuntimeConfig.manifestServiceUrl) && ({
                     ...options, headers: {
                         Authorization: `${authData?.token_type} ${authData?.access_token}`
                     }

@@ -11,9 +11,9 @@ const nextConfig = {
     metadataServiceUrl: `${process.env.SCAN_SERVICE_URL}/metadata`,
   },
   publicRuntimeConfig: {
-    publicManifestServiceUrl: `${process.env.PUBLIC_SCAN_SERVICE_URL}/manifest`,
-    publicMetadataServiceUrl: `${process.env.PUBLIC_SCAN_SERVICE_URL}/metadata`,
-    publicBootstrapServiceUrl: `${process.env.PUBLIC_BOOTSTRAP_SERVICE_URL}`,
+    manifestServiceUrl: `${process.env.PUBLIC_SCAN_SERVICE_URL}/manifest`,
+    metadataServiceUrl: `${process.env.PUBLIC_SCAN_SERVICE_URL}/metadata`,
+    bootstrapServiceUrl: `${process.env.PUBLIC_BOOTSTRAP_SERVICE_URL}`,
   },
 }
 
