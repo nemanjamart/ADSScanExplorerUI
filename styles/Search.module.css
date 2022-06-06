@@ -53,7 +53,7 @@
 
 .navTabs > li {
   display: inline;
-  margin-right: 10px;
+
 }
 
 
@@ -61,9 +61,16 @@
   font-size: 17px;
   background-color: transparent;
   color: #C4C4C4;
-  border: none;
+  border: solid #C4C4C4;
+  padding: 0px 8px 0px 8px;
 }
 
 .navButton:enabled {
-  color: #4073dd 
+  color: #4073dd;
+  border-width: 0px 0px 1px 0px;
+}
+
+.navButton:disabled {
+  color: #5D5D5D;
+  border-width: 1px 1px 0px 1px !important;
 }
