@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router'
 import type { NextPage } from 'next'
 import Article from '../components/Article/Article'
@@ -68,9 +68,9 @@ interface TabProps {
 const SearchResultTab = ({ tab, onSearchComplete }: TabProps) => {
     const router = useRouter()
     const { q, page, limit } = router.query
-    const url = `${publicRuntimeConfig.metadataServiceUrl}/${tab.name}/search`
-    const queries = { q: q, page: page, limit: limit }
-    const { data, isLoading, isError } = useScanService<SearchResultType>(url, queries)
+    const searchUrl = `${publicRuntimeConfig.metadataServiceUrl}/${tab.name}/search`
+    const searchQueries = { q: q, page: page, limit: limit }
+    const { data, isLoading, isError } = useScanService<SearchResultType>(searchUrl, searchQueries)
 
     const onPaginationChanged = (page: number, limit: number) => {
         router.push({
@@ -84,13 +84,13 @@ const SearchResultTab = ({ tab, onSearchComplete }: TabProps) => {
             onSearchComplete(data.total)
         }
     }, [onSearchComplete, data])
-
+    
     if (isError) return (<><p>Sorry something went wrong</p></>)
     if (isLoading) return <PuffLoader size={150} />
     if (data.total == 0) return (<><p>Sorry no results were found for <b>{q}</b></p></>)
     if (data.pageCount < Number(page)) onPaginationChanged(1, Number(limit))
 
-
+   
 
     return (
         <>
