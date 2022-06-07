@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import type { NextPage } from 'next'
 import Article from '../components/Article/Article'
