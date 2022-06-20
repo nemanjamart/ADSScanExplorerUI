@@ -1,7 +1,8 @@
 type PageType = {
     id: string
+    type: string
     label: string
-    journal_volume_id: string
+    collection_id: string
     volume_page_num: number
     articles: string[]
     thumbnail: string
