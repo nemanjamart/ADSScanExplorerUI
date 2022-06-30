@@ -27,7 +27,7 @@ const Page = ({ page, textQuery, thumbnail }: PageProps) => {
                 <div className={styles.grid}>
                     <ProtectedImage className={styles.thumbnail} src={thumbnail} alt="Page thumbnail" width={400} height={200} />
                     <h2>Page {page.label}</h2>
-                    <p>Page in volume {page.volume_page_num}</p>
+                    <p>Page {page.volume_page_num} in {page.journal}{page.volume} </p>
                 </div>
             </div>
         </Link>
