@@ -18,6 +18,7 @@ const fetcher = (url, token) => fetch(url, { method: "GET", headers: { Authoriza
 const ProtectedImage = ({ src, className, alt, width, height }: ProtectedImageProps) => {
     const { data: authData } = useBootstrap()
     const { data: image, error } = useSWR([src, authData.access_token], fetcher)
+    if (!image) return <></>
 
     return <Image className={className} src={image} alt={alt} width={width} height={height} unoptimized />
 }

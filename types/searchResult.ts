@@ -2,7 +2,7 @@ import ArticleType from "./article"
 import CollectionType from "./collection"
 import PageType from "./page"
 
-type SearchResultType = {
+interface SearchResultType  {
     page: number
     pageCount: number
     total: number

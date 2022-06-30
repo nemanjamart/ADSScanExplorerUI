@@ -5,15 +5,16 @@ import ProtectedImage from '../ProtectedImage/ProtectedImage'
 
 type ArticleProps = {
     article: ArticleType
-    query: string
+    thumbnail: string
+    textQuery: string
 }
 
-const Article = ({ article, query }: ArticleProps) => {
+const Article = ({ article, thumbnail, textQuery }: ArticleProps) => {
     return (
-        <Link href={{ pathname: `/manifest/${article.id}`, query: query ? { q: query } : '' }} >
+        <Link href={{ pathname: `/manifest/${article.id}`, query: textQuery ? { full: textQuery } : '' }} >
             <div className={styles.card}>
                 <div className={styles.grid}>
-                    <ProtectedImage className={styles.thumbnail} src={article.thumbnail} alt="Article thumbnail" width={400} height={200} />
+                    <ProtectedImage className={styles.thumbnail} src={thumbnail} alt="Article thumbnail" width={400} height={200} />
                     <h2>{article.bibcode}</h2>
                     <p>{article.pages} pages</p>
                 </div>

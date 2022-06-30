@@ -17,13 +17,47 @@ import getConfig from 'next/config'
 
 const { publicRuntimeConfig } = getConfig()
 
-const ArticleTab: TabType = { name: 'article', render: (index, item, query) => { return <Article key={index} article={item} query={query} /> } }
-const CollectionTab: TabType = { name: 'collection', render: (index, item, query) => { return <Collection key={index} collection={item} query={query} /> } }
-const PageTab: TabType = { name: 'page', render: (index, item, query) => { return <Page key={index} page={item} /> } }
+
+function tabItemThumbnail(id: string, type: string) {
+    return `${publicRuntimeConfig.serviceUrl}/image/thumbnail?id=${id}&type=${type}`
+}
+
+const ArticleTab: TabType = {
+    name: 'article', render: (index, item, textQuery) => {
+        return <Article key={index} article={item} thumbnail={tabItemThumbnail(item.id, 'article')} textQuery={textQuery} />
+    }
+}
+const CollectionTab: TabType = {
+    name: 'collection', render: (index, item, textQuery) => {
+        return <Collection key={index} thumbnail={tabItemThumbnail(item.id, 'collection')} collection={item} textQuery={textQuery} />
+    }
+}
+const PageTab: TabType = {
+    name: 'page', render: (index, item, textQuery) => {
+        return <Page key={index} thumbnail={tabItemThumbnail(item.id, 'page')} page={item} textQuery={textQuery} />
+    }
+}
 
 const Search: NextPage = () => {
-    const [tab, setTab] = useState<TabType>(ArticleTab)
+    const router = useRouter()
+    const { q, page, limit, t } = router.query
+
+    let defaultTab = ArticleTab
+    if (t == CollectionTab.name) defaultTab = CollectionTab
+    else if (t == PageTab.name) defaultTab = PageTab
+
+    const [tab, setTab] = useState<TabType>(defaultTab)
     const [itemCount, setItemCount] = useState<number>(0)
+
+
+    const onTabChanged = (tab: TabType) => {
+        setTab(tab)
+
+        router.push({
+            pathname: '/search',
+            query: { q: q, page: page, limit: limit, t: tab.name},
+        }, undefined, { shallow: true })
+    }
 
     const onSearchComplete = (itemCount: number) => {
         setItemCount(itemCount)
@@ -41,13 +75,13 @@ const Search: NextPage = () => {
                 <div className={styles.gridCenter}>
                     <ul className={styles.navTabs}>
                         <li>
-                            <button className={styles.navButton} disabled={tab == ArticleTab} onClick={() => setTab(ArticleTab)}>Articles</button>
+                            <button className={styles.navButton} disabled={tab == ArticleTab} onClick={() => onTabChanged(ArticleTab)}>Articles</button>
                         </li>
                         <li>
-                            <button className={styles.navButton} disabled={tab == CollectionTab} onClick={() => setTab(CollectionTab)}>Collections</button>
+                            <button className={styles.navButton} disabled={tab == CollectionTab} onClick={() => onTabChanged(CollectionTab)}>Collections</button>
                         </li>
                         <li>
-                            <button className={styles.navButton} disabled={tab == PageTab} onClick={() => setTab(PageTab)}>Pages</button>
+                            <button className={styles.navButton} disabled={tab == PageTab} onClick={() => onTabChanged(PageTab)}>Pages</button>
                         </li>
                     </ul>
                     <div className={styles.resultsContainer}>
@@ -75,7 +109,7 @@ const SearchResultTab = ({ tab, onSearchComplete }: TabProps) => {
     const onPaginationChanged = (page: number, limit: number) => {
         router.push({
             pathname: '/search',
-            query: { q: q, page: page, limit: limit },
+            query: { q: q, page: page, limit: limit, t: tab.name },
         }, undefined, { shallow: true })
     }
 
@@ -84,13 +118,13 @@ const SearchResultTab = ({ tab, onSearchComplete }: TabProps) => {
             onSearchComplete(data.total)
         }
     }, [onSearchComplete, data])
-    
+
     if (isError) return (<><p>Sorry something went wrong</p></>)
     if (isLoading) return <PuffLoader size={150} />
     if (data.total == 0) return (<><p>Sorry no results were found for <b>{q}</b></p></>)
     if (data.pageCount < Number(page)) onPaginationChanged(1, Number(limit))
 
-   
+
 
     return (
         <>

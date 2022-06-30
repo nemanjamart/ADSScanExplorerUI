@@ -1,4 +1,4 @@
-type BootstrapType = {
+interface BootstrapType  {
     username: string
     scopes: [string]
     client_id: string

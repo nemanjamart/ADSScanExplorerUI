@@ -13,19 +13,9 @@ interface SearchBoxProps {
 }
 
 const SearchBox = ({ showExample = false }: SearchBoxProps) => {
-    const [query, setQuery] = useState<string>("");
     const router = useRouter()
-
-    useEffect(() => {
-        sessionStorage.setItem('queryState', query)
-    }, [query]);
-
-
-    useLayoutEffect(() => {
-        if (sessionStorage.getItem('queryState')) {
-            setQuery(sessionStorage.getItem('queryState'))
-        }
-    }, [])
+    const { q } = router.query
+    const [query, setQuery] = useState<string>(q ? String(q) : '');
 
 
     const hrefSearch = { pathname: '/search', query: { q: query, page: 1, limit: 10 } }

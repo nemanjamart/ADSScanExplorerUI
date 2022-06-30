@@ -8,16 +8,22 @@ import useBootstrap from '../../hooks/useBootstrap';
 
 const { publicRuntimeConfig } = getConfig()
 
-const Manifest: NextPage = (props) => {
+interface ManifestProps {
+    id: string
+    page: number
+    textQuery: string
+}
+
+const Manifest: NextPage<ManifestProps> = ({id, page, textQuery} : ManifestProps) => {
     const { data: authData } = useBootstrap()
 
     const config = {
         id: 'ads_mirador_viewer',
         windows: [{
             imageToolsEnabled: true,
-            loadedManifest: `${publicRuntimeConfig.manifestServiceUrl}/${props['id']}/manifest.json`,
-            canvasIndex: Number(props['page']) - 1,
-            defaultSearchQuery: props['query']
+            loadedManifest: `${publicRuntimeConfig.manifestServiceUrl}/${id}/manifest.json`,
+            canvasIndex: page - 1,
+            defaultSearchQuery: textQuery
         }],
         requests: {
             preprocessors: [
@@ -66,8 +72,9 @@ const Manifest: NextPage = (props) => {
 }
 
 Manifest.getInitialProps = async ({ query }) => {
-    const { id, q = '', p = 1 } = query;
-    return { id: id, query: q, page: p }
+    const { id, full = '', p = 1 } = query;
+    const props : ManifestProps =  { id: String(id), textQuery: String(full), page: Number(p) }
+    return props
 }
 
 export default Manifest

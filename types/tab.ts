@@ -1,4 +1,4 @@
-type TabType = {
+interface TabType  {
     name: string
     render(index, item, contentQuery)
 }
