@@ -21,12 +21,33 @@ const Manifest: NextPage = (props) => {
         }],
         requests: {
             preprocessors: [
-                (url, options) => (url.match(publicRuntimeConfig.manifestServiceUrl) && ({
+                (url, options) => (url.match(publicRuntimeConfig.serviceUrl) && ({
                     ...options, headers: {
                         Authorization: `${authData?.token_type} ${authData?.access_token}`
                     }
                 }))
             ]
+        },
+        osdConfig: {
+            loadTilesWithAjax: true,
+            alwaysBlend: false,
+            blendTime: 0.1,
+            preserveImageSizeOnResize: true,
+            preserveViewport: true,
+            showNavigationControl: false,
+        }
+    }
+
+    // Monkey patch XHR requests made by OSD to inject the auth header
+    if (typeof window !== "undefined") {
+        let oldXHROpen = window.XMLHttpRequest.prototype.open;
+        window.XMLHttpRequest.prototype.open = function (method: string, url: string | URL, async?: boolean, username?: string | null, password?: string | null): void {
+            oldXHROpen.apply(this, arguments);
+
+            if (authData?.access_token) {
+                this.setRequestHeader('Authorization', "Bearer " + authData?.access_token);
+            }
+
         }
     }
 
