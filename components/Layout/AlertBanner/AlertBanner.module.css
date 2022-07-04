@@ -1,0 +1,31 @@
+.container {
+    background-color: #1a1a1a;
+    height: 60px;
+    display: inline-flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+#error {
+    background-color: red;
+    font-weight: bold;
+}
+
+#message {
+    background-color: #1380e0;
+}
+
+.alert {
+    margin-left: 2%;
+    color: white;
+}
+
+.button {
+    margin-right: 2%;
+    color: white;
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+}

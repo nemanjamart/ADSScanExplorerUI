@@ -6,6 +6,7 @@ import Router from 'next/router';
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import App from 'next/app'
+import ErrorProvider from '../providers/AlertProvider'
 
 config.autoAddCss = false
 
@@ -22,7 +23,9 @@ Router.events.on('routeChangeError', () => NProgress.done());
 
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return <ErrorProvider>
+    <Component {...pageProps} />
+  </ErrorProvider>
 }
 
 // Need entire app to be SSR due to the nature of docker setup

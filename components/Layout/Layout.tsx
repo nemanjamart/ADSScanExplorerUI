@@ -3,6 +3,7 @@ import Header from './Header/Header'
 import Meta from './Meta/Meta'
 import Footer from './Footer/Footer'
 import styles from './Layout.module.css'
+import AlertBanner from './AlertBanner/AlertBanner'
 
 type Props = {
     showHeader?: boolean
@@ -14,6 +15,7 @@ const Layout = ({ showHeader = false, children }: Props) => {
         <>
             <Meta />
             <Navbar />
+            <AlertBanner />
             {showHeader ? <Header /> : ''}
             <main className={styles.mainContent}>{children}</main>
             {/* <Footer /> */}
