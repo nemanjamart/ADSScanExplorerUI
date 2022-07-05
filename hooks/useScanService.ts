@@ -1,21 +1,21 @@
 import { useEffect } from "react";
 import useSWR from "swr"
-import ServiceErrorType from "../types/serviceError";
 import useBootstrap from "./useBootstrap"
 import useError from "./useAlert";
+import ServiceError from "../types/serviceError";
 
 const fetchGeneric = <T>(url, headers) => fetch(url, { headers: headers }).then(resp => Promise.all([resp, resp.json()])).then(([resp, data]) => {
     if (!resp.ok) {
         if (data && data.message) {
-            const error = new Error(data.message)
+            const error = new ServiceError(data.message, data?.type)
             throw error
-        } 
+        }
         else {
-            const error = new Error('An error occured while fetching data')
+            const error = new ServiceError('Sorry! An unexpected error occured while fetching the data')
             throw error
         }
 
-        
+
     } else {
         return data as T
     }
@@ -24,7 +24,7 @@ const fetchGeneric = <T>(url, headers) => fetch(url, { headers: headers }).then(
 function useScanService<T>(url, queries) {
 
     const { data: authData, error: authError } = useBootstrap()
-    const {alert, addError, removeAlert} = useError();
+    const { addMessage, removeAlert } = useError();
     const queryStr = Object.entries(queries).map(([key, value]) => `${key}=${value}`).join('&')
     const key = `${url}?${queryStr}`
 
@@ -34,11 +34,11 @@ function useScanService<T>(url, queries) {
 
     useEffect(() => {
         if (error) {
-            addError(error.message)
+            addMessage(error instanceof ServiceError ? error.getMessage() : error.message)
         } else {
             removeAlert()
         }
-    }, [removeAlert, addError, error])
+    }, [removeAlert, addMessage, error])
 
 
     return {
