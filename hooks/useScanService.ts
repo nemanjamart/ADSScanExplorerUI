@@ -35,10 +35,10 @@ function useScanService<T>(url, queries) {
     useEffect(() => {
         if (error) {
             addError(error.message)
-        } else if (alert && alert.isError) {
+        } else {
             removeAlert()
         }
-    }, [alert, removeAlert, addError, error])
+    }, [removeAlert, addError, error])
 
 
     return {
