@@ -13,7 +13,7 @@ const AlertBanner = () => {
 
     return (
         <div className={styles.container} id={alert && alert.isError ? styles.error : styles.message}>
-            {alert && alert.message && <p className={styles.alert}>({alert.message})</p>}
+            {alert && alert.message && <p className={styles.alert}>{alert.message}</p>}
             <button className={styles.button} onClick={() => removeAlert()}>
                 <FontAwesomeIcon icon={faClose} inverse />
             </button>
