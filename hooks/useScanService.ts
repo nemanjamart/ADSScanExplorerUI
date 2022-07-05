@@ -24,7 +24,7 @@ const fetchGeneric = <T>(url, headers) => fetch(url, { headers: headers }).then(
 function useScanService<T>(url, queries) {
 
     const { data: authData, error: authError } = useBootstrap()
-    const { addError } = useError();
+    const {alert, addError, removeAlert} = useError();
     const queryStr = Object.entries(queries).map(([key, value]) => `${key}=${value}`).join('&')
     const key = `${url}?${queryStr}`
 
@@ -35,8 +35,10 @@ function useScanService<T>(url, queries) {
     useEffect(() => {
         if (error) {
             addError(error.message)
+        } else if (alert && alert.isError) {
+            removeAlert()
         }
-    }, [addError, error])
+    }, [alert, removeAlert, addError, error])
 
 
     return {
