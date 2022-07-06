@@ -55,7 +55,7 @@ const Search: NextPage = () => {
 
         router.push({
             pathname: '/search',
-            query: { q: q, page: page, limit: limit, t: tab.name},
+            query: { q: q, page: page, limit: limit, t: tab.name },
         }, undefined, { shallow: true })
     }
 
@@ -68,7 +68,9 @@ const Search: NextPage = () => {
             <div className={styles.searchHeader}>
                 <div className={styles.searchBoxContainer}>
                     <SearchBox />
-                    <p>Your search returned <b>{itemCount}</b> results</p>
+                    <div className={styles.searchResultCount}>
+                        <p>Your search returned <b>{itemCount}</b> results</p>
+                    </div>
                 </div>
             </div>
             <div className={styles.grid}>

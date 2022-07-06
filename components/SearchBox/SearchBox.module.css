@@ -1,7 +1,11 @@
 .container {
-    height: 40px;
     width: 100%;
     margin: auto;
+}
+
+
+.inputContainer {
+    height: 40px;
 }
 
 .inputGroup {
@@ -40,4 +44,26 @@
 
 .searchBox:focus-within {
     border: 1px solid #4073dd;
+}
+
+.quickFieldContainer {
+    height: 40px;
+    overflow: hidden;
+    font-size: small;
+}
+.quickFieldContainer > ul {
+    list-style: none;
+    color: #C4C4C4;
+    float: left;
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+
+.quickFieldContainer > ul > li {
+    display: inline;
+    margin-right: 10px;
+}
+
+.quickFieldContainer > ul > li > a {
+    color: #4073dd;
 }

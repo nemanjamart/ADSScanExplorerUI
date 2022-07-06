@@ -17,9 +17,13 @@ const SearchBox = ({ showExample = false }: SearchBoxProps) => {
     const { q } = router.query
     const [query, setQuery] = useState<string>(q ? String(q) : '');
 
-
     const hrefSearch = { pathname: '/search', query: { q: query, page: 1, limit: 10 } }
-    
+
+
+    const appendQuery = (q: string) => {
+        setQuery(`${query} ${q}`)
+    }
+
     const onKeyDown = (e) => {
         if (e.key == "Enter") {
             router.push(hrefSearch)
@@ -28,14 +32,49 @@ const SearchBox = ({ showExample = false }: SearchBoxProps) => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.inputGroup}>
-                <input type="text" className={styles.searchBox} placeholder="Search" onChange={(e) => setQuery(e.target.value)} value={query} onKeyDown={onKeyDown} />
-                <Link href={hrefSearch} passHref>
-                    <button className={styles.button}>
-                        <FontAwesomeIcon icon={faSearch} inverse />
-                    </button>
-                </Link>
+            <div className={styles.quickFieldContainer}>
+                <ul>
+                    <li>
+                        QUICK FIELD:
+                    </li>
+                    <li>
+                        <a onClick={() => appendQuery("bibstem:\"\"")}>
+                            Publication
+                        </a>
+                    </li>
+                    <li>
+                        <a onClick={() => appendQuery("bibcode:\"\"")}>
+                            Article
+                        </a>
+                    </li>
+                    <li>
+                        <a onClick={() => appendQuery("pagetype:\"\"")}>
+                            Page type
+                        </a>
+                    </li>
+                    <li>
+                        <a onClick={() => appendQuery("full:\"\"")}>
+                            Content
+                        </a>
+                    </li>
+                    <li>
+                        <a onClick={() => appendQuery("full:\"\"")}>
+                            Content
+                        </a>
+                    </li>
+                </ul>
             </div>
+            <div className={styles.inputContainer}>
+                <div className={styles.inputGroup}>
+                    <input type="text" className={styles.searchBox} placeholder="Search" onChange={(e) => setQuery(e.target.value)} value={query} onKeyDown={onKeyDown} />
+                    <Link href={hrefSearch} passHref>
+                        <button className={styles.button}>
+                            <FontAwesomeIcon icon={faSearch} inverse />
+                        </button>
+                    </Link>
+                </div>
+            </div>
+
             {showExample ? <SearchExample onExampleSelected={(example) => setQuery(example)} /> : ''}
         </div>
     )
