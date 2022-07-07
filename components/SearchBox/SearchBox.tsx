@@ -57,11 +57,6 @@ const SearchBox = ({ showExample = false }: SearchBoxProps) => {
                             Content
                         </a>
                     </li>
-                    <li>
-                        <a onClick={() => appendQuery("full:\"\"")}>
-                            Content
-                        </a>
-                    </li>
                 </ul>
             </div>
             <div className={styles.inputContainer}>

@@ -16,8 +16,9 @@ function useBootstrap() {
     const { data, error } = useSWRImmutable([publicRuntimeConfig.bootstrapServiceUrl, cookies], fetchAuthWithCookies)
 
     if (!error && data) {
-        const expiry = new Date(data.expire_in).getTime()
-        if (expiry <= Date.now()) {
+        // Add Z to correctly format timestamp as it is in UTC
+        const expiry = new Date(data.expire_in + 'Z')
+        if (expiry.getTime() <= Date.now()) {
             mutate([publicRuntimeConfig.bootstrapServiceUrl, cookies])
         }
     }

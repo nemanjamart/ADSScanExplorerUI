@@ -5,6 +5,7 @@ import SearchBox from '../../components/SearchBox/SearchBox';
 import styles from '../../styles/Manifest.module.css'
 import Mirador from '../../components/Mirador/Mirador';
 import useBootstrap from '../../hooks/useBootstrap';
+import { useEffect } from 'react';
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -14,7 +15,7 @@ interface ManifestProps {
     textQuery: string
 }
 
-const Manifest: NextPage<ManifestProps> = ({id, page, textQuery} : ManifestProps) => {
+const Manifest: NextPage<ManifestProps> = ({ id, page, textQuery }: ManifestProps) => {
     const { data: authData } = useBootstrap()
 
     const config = {
@@ -35,28 +36,17 @@ const Manifest: NextPage<ManifestProps> = ({id, page, textQuery} : ManifestProps
             ]
         },
         osdConfig: {
-            loadTilesWithAjax: true,
             alwaysBlend: false,
             blendTime: 0.1,
             preserveImageSizeOnResize: true,
             preserveViewport: true,
             showNavigationControl: false,
-        }
-    }
-
-    // Monkey patch XHR requests made by OSD to inject the auth header
-    if (typeof window !== "undefined") {
-        let oldXHROpen = window.XMLHttpRequest.prototype.open;
-        window.XMLHttpRequest.prototype.open = function (method: string, url: string | URL, async?: boolean, username?: string | null, password?: string | null): void {
-            oldXHROpen.apply(this, arguments);
-
-            if (authData?.access_token) {
-                this.setRequestHeader('Authorization', "Bearer " + authData?.access_token);
+            loadTilesWithAjax: true,
+            ajaxHeaders: {
+                'Authorization': "Bearer " + authData?.access_token
             }
-
         }
     }
-
 
     return (
         <Layout>
@@ -73,7 +63,7 @@ const Manifest: NextPage<ManifestProps> = ({id, page, textQuery} : ManifestProps
 
 Manifest.getInitialProps = async ({ query }) => {
     const { id, full = '', p = 1 } = query;
-    const props : ManifestProps =  { id: String(id), textQuery: String(full), page: Number(p) }
+    const props: ManifestProps = { id: String(id), textQuery: String(full), page: Number(p) }
     return props
 }
 
