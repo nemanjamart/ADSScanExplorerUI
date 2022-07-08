@@ -1,12 +1,13 @@
 
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import styles from './SearchBox.module.css'
 import SearchExample from './SearchExample/SearchExample';
 import { useRouter } from 'next/router'
-
+import QuickField from './QuickField/QuickField';
+import Container from 'react-bootstrap/Container'
 
 interface SearchBoxProps {
     showExample?: Boolean
@@ -31,47 +32,20 @@ const SearchBox = ({ showExample = false }: SearchBoxProps) => {
     }
 
     return (
-        <div className={styles.container}>
-            <div className={styles.quickFieldContainer}>
-                <ul>
-                    <li>
-                        QUICK FIELD:
-                    </li>
-                    <li>
-                        <a onClick={() => appendQuery("bibstem:\"\"")}>
-                            Publication
-                        </a>
-                    </li>
-                    <li>
-                        <a onClick={() => appendQuery("bibcode:\"\"")}>
-                            Article
-                        </a>
-                    </li>
-                    <li>
-                        <a onClick={() => appendQuery("pagetype:\"\"")}>
-                            Page type
-                        </a>
-                    </li>
-                    <li>
-                        <a onClick={() => appendQuery("full:\"\"")}>
-                            Content
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div className={styles.inputContainer}>
-                <div className={styles.inputGroup}>
-                    <input type="text" className={styles.searchBox} placeholder="Search" onChange={(e) => setQuery(e.target.value)} value={query} onKeyDown={onKeyDown} />
-                    <Link href={hrefSearch} passHref>
-                        <button className={styles.button}>
-                            <FontAwesomeIcon icon={faSearch} inverse />
-                        </button>
-                    </Link>
-                </div>
+        <Container>
+            <QuickField onClick={appendQuery} />
+            <div className={styles.inputGroup} >
+                <input type="text" className={styles.searchBox} placeholder="Search" onChange={(e) => setQuery(e.target.value)} value={query} onKeyDown={onKeyDown} />
+                <Link href={hrefSearch} passHref>
+                    <button className={styles.button}>
+                        <FontAwesomeIcon icon={faSearch} inverse />
+                    </button>
+                </Link>
             </div>
 
+
             {showExample ? <SearchExample onExampleSelected={(example) => setQuery(example)} /> : ''}
-        </div>
+        </Container>
     )
 }
 

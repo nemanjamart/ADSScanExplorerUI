@@ -1,27 +1,18 @@
-.container {
-    width: 100%;
-    margin: auto;
-}
-
-
-.inputContainer {
-    height: 40px;
-}
-
 .inputGroup {
-    position: relative;
-    display: inline;
+    display: flex;
     overflow: hidden;
-    white-space: nowrap;
+    min-height: 40px;
 }
 
 .button {
     background-color: #1c459b;
     border-color: #1c459b;
-    height: 100%;
-    aspect-ratio: 1.1 / 1;
-    border-radius: 2px;
+    width: 7%;
+    min-width: 40px;
+    border-radius: 0px 4px 4px 0px;
     box-shadow: none;
+    padding: 0px;
+    margin: 0px
 }
 
 .button:hover,
@@ -31,10 +22,9 @@
 }
 
 .searchBox {
-    height: 100%;
     width: 100%;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 4px 0px 0px 4px;
     padding-left: 10px;
 }
 
@@ -44,26 +34,4 @@
 
 .searchBox:focus-within {
     border: 1px solid #4073dd;
-}
-
-.quickFieldContainer {
-    height: 40px;
-    overflow: hidden;
-    font-size: small;
-}
-.quickFieldContainer > ul {
-    list-style: none;
-    color: #C4C4C4;
-    float: left;
-    padding-left: 10px;
-    margin-bottom: 5px;
-}
-
-.quickFieldContainer > ul > li {
-    display: inline;
-    margin-right: 10px;
-}
-
-.quickFieldContainer > ul > li > a {
-    color: #4073dd;
 }

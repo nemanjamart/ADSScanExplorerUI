@@ -2,6 +2,8 @@ import Link from 'next/link'
 import CollectionType from '../../types/collection'
 import styles from './Collection.module.css'
 import ProtectedImage from '../ProtectedImage/ProtectedImage'
+import Card from 'react-bootstrap/Card'
+import ItemCard from '../ItemCard/ItemCard'
 
 type CollectionProps = {
     collection: CollectionType
@@ -12,13 +14,9 @@ type CollectionProps = {
 const Collection = ({ collection, thumbnail, textQuery = '' }: CollectionProps) => {
 
     return (
-        <Link href={{pathname: `/manifest/${collection.id}`, query: textQuery ? { full: textQuery } : ''}} >
-            <div className={styles.card}>
-                <div className={styles.grid}>
-                    <ProtectedImage className={styles.thumbnail} src={thumbnail} alt="Collection thumbnail" width={400} height={200}/>
-                    <h2>{collection.journal}{collection.volume}</h2>
-                    <p>{collection.pages} pages</p>
-                </div>
+        <Link href={{ pathname: `/manifest/${collection.id}`, query: textQuery ? { full: textQuery } : '' }} >
+            <div>
+                <ItemCard title={`${collection.journal}${collection.volume}`} text={`${collection.pages} pages`} thumbnail={thumbnail} />
             </div>
         </Link>
     )

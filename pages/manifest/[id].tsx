@@ -6,6 +6,7 @@ import styles from '../../styles/Manifest.module.css'
 import Mirador from '../../components/Mirador/Mirador';
 import useBootstrap from '../../hooks/useBootstrap';
 import { useEffect } from 'react';
+import Container from 'react-bootstrap/Container'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -50,14 +51,12 @@ const Manifest: NextPage<ManifestProps> = ({ id, page, textQuery }: ManifestProp
 
     return (
         <Layout>
-            <div className={styles.searchHeader}>
-                <div className={styles.searchBoxContainer}>
-                    <SearchBox />
-                </div>
+            <div className='d-flex mb-2'>
+                <SearchBox />
             </div>
-            <div className={styles.miradorContainer}>
+            <Container fluid className="d-flex flex-column h-100">
                 <Mirador config={config} />
-            </div>
+            </Container>
         </Layout>)
 }
 

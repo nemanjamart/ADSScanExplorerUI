@@ -1,0 +1,28 @@
+.quickFieldContainer {
+    height: 40px;
+    overflow: hidden;
+    font-size: small;
+    align-items: center;
+    display: flex;
+}
+.quickFieldContainer > ul {
+    list-style: none;
+    color: #C4C4C4;
+    float: left;
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+
+.quickFieldContainer > ul > li {
+    display: inline;
+    margin-right: 10px;
+}
+
+.quickFieldItem {
+    color: #4073dd;
+    text-decoration: none;
+}
+
+.quickFieldItem:hover {
+    text-decoration: underline;
+}

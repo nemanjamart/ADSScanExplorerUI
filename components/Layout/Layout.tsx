@@ -4,6 +4,7 @@ import Meta from './Meta/Meta'
 import Footer from './Footer/Footer'
 import styles from './Layout.module.css'
 import AlertBanner from './AlertBanner/AlertBanner'
+import { Container } from 'react-bootstrap'
 
 type Props = {
     showHeader?: boolean
@@ -17,7 +18,7 @@ const Layout = ({ showHeader = false, children }: Props) => {
             <Navbar />
             <AlertBanner />
             {showHeader ? <Header /> : ''}
-            <main className={styles.mainContent}>{children}</main>
+            <Container className="d-flex flex-column h-100 pt-2 m-0" fluid>{children}</Container>
             {/* <Footer /> */}
         </>
     )

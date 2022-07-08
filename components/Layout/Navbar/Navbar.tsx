@@ -4,36 +4,44 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Container, Navbar, Nav } from 'react-bootstrap'
 
-const Navbar: FC<{}> = () => {
+const AdsNavbar: FC<{}> = () => {
     return (
-        <div className={styles.container}>
-            <Link href={'/'}>
-                <a className={styles.homeButton}>
-                    <div className={styles.logo}>
-                        <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH}/assets/ads.svg`} alt={"ADS logotype"} width={80} height={80} layout='responsive'  />
-                    </div>
-                    <h1>
-                        <b>ads</b>
-                    </h1>
-                </a>
-            </Link>
-            <ul>
-                <li>
-                    <button className={styles.button}>
-                        <FontAwesomeIcon icon={faComment} />
-                        Feedback
-                    </button>
-                </li>
-                <li>
-                    <button className={styles.button}>
-                        <FontAwesomeIcon icon={faQuestionCircle} />
-                        About
-                    </button>
-                </li>
-            </ul>
-        </div>
+        <>
+            <Navbar className={styles.navbarContainer} bg="dark" variant="dark" expand="lg">
+                <Container fluid>
+                    <Link href="/" passHref>
+                        <Navbar.Brand>
+                            <div id={styles.brandContainer} >
+                                <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH}/assets/ads.svg`} alt={"ADS logotype"} width={50} height={50} />
+                                <h1><b>ads</b></h1>
+                            </div>
+                        </Navbar.Brand>
+                    </Link>
+                    <Navbar.Toggle aria-controls="navbarScroll" />
+                    <Navbar.Collapse id="navbarScroll" className="justify-content-end ">
+                        <Nav>
+                            <Link href="#feedback" passHref>
+                                <Nav.Link>
+                                    <FontAwesomeIcon icon={faComment} />
+                                    {' '}
+                                    Feedback
+                                </Nav.Link>
+                            </Link>
+                            <Link href="#features" passHref>
+                                <Nav.Link >
+                                    <FontAwesomeIcon icon={faQuestionCircle} />
+                                    {' '}
+                                    About
+                                </Nav.Link>
+                            </Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
+        </>
     )
 }
 
-export default Navbar
+export default AdsNavbar

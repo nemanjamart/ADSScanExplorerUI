@@ -4,6 +4,9 @@ import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronCircleLeft, faChevronCircleRight } from '@fortawesome/free-solid-svg-icons'
 import styles from './Pagination.module.css'
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
+import Button from 'react-bootstrap/Button'
 
 interface PaginationProps {
     page: number
@@ -48,8 +51,27 @@ const Pagination = ({ page, limit, pageCount, onPaginationChanged }: PaginationP
                     </select>
                 </label>
             </div>
-            <div className={styles.pageNavContainer}>
-                <button className={styles.pageNavButton} onClick={() => onPageChanged(page - 1)} disabled={page <= 1}>
+
+            <ButtonToolbar aria-label="Toolbar with button groups">
+                <ButtonGroup className="justify-content-between" aria-label="First group">
+                    <Button className={styles.pageNavButton} variant="outline-primary" onClick={() => onPageChanged(page - 1)} disabled={page <= 1}>
+                        <FontAwesomeIcon icon={faChevronCircleLeft} />
+                        prev
+                    </Button>
+                    <label>
+                        <input key={page} id={styles.pageInput} type='number' className='no-spinner' defaultValue={page} onKeyDown={pageNumberInputKeyDown} />
+                        of {pageCount}
+                    </label>
+                    <Button className={styles.pageNavButton} variant="outline-primary" onClick={() => onPageChanged(page + 1)} disabled={page >= pageCount}>
+                        next
+                        <FontAwesomeIcon icon={faChevronCircleRight} />
+                    </Button>
+                </ButtonGroup>
+                <ButtonGroup aria-label="Third group">
+
+                </ButtonGroup>
+            </ButtonToolbar>
+            {/* <button className={styles.pageNavButton} onClick={() => onPageChanged(page - 1)} disabled={page <= 1}>
                     <FontAwesomeIcon icon={faChevronCircleLeft} />
                     prev
                 </button>
@@ -60,8 +82,8 @@ const Pagination = ({ page, limit, pageCount, onPaginationChanged }: PaginationP
                 <button className={styles.pageNavButton} onClick={() => onPageChanged(page + 1)} disabled={page >= pageCount}>
                     next
                     <FontAwesomeIcon icon={faChevronCircleRight} />
-                </button>
-            </div>
+                </button> */}
+
         </div>
     )
 }

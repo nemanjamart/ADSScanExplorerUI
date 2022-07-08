@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import styles from './Page.module.css'
 import PageType from '../../types/page'
-import ProtectedImage from '../ProtectedImage/ProtectedImage'
+import ItemCard from '../ItemCard/ItemCard'
 
 type PageProps = {
     page: PageType
@@ -23,12 +23,8 @@ const Page = ({ page, textQuery, thumbnail }: PageProps) => {
 
     return (
         <Link href={{ pathname: `/manifest/${page.collection_id}`, query: query }} >
-            <div className={styles.card}>
-                <div className={styles.grid}>
-                    <ProtectedImage className={styles.thumbnail} src={thumbnail} alt="Page thumbnail" width={400} height={200} />
-                    <h2>Page {page.label}</h2>
-                    <p>Page {page.volume_page_num} in {page.journal}{page.volume} </p>
-                </div>
+            <div>
+                <ItemCard title={`Page ${page.label}`} text={`Page ${page.volume_page_num} in ${page.journal}${page.volume}`} thumbnail={thumbnail} />
             </div>
         </Link>
     )

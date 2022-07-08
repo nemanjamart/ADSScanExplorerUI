@@ -8,111 +8,86 @@ import styles from '../styles/Search.module.css'
 import Layout from '../components/Layout/Layout'
 import Pagination from '../components/Pagination/Pagination'
 import SearchBox from '../components/SearchBox/SearchBox';
-import { PuffLoader } from 'react-spinners';
 import Page from '../components/Page/Page';
-import TabType from '../types/tab';
 import useScanService from '../hooks/useScanService';
 import SearchResultType from '../types/searchResult';
+import Container from 'react-bootstrap/Container'
+import Nav from 'react-bootstrap/Nav'
 import getConfig from 'next/config'
+import Link from 'next/link';
+import MultiCardLoader from '../components/ContentLoader/MultiCardLoader';
 
 const { publicRuntimeConfig } = getConfig()
 
-
-function tabItemThumbnail(id: string, type: string) {
-    return `${publicRuntimeConfig.serviceUrl}/image/thumbnail?id=${id}&type=${type}`
-}
-
-const ArticleTab: TabType = {
-    name: 'article', render: (index, item, textQuery) => {
-        return <Article key={index} article={item} thumbnail={tabItemThumbnail(item.id, 'article')} textQuery={textQuery} />
-    }
-}
-const CollectionTab: TabType = {
-    name: 'collection', render: (index, item, textQuery) => {
-        return <Collection key={index} thumbnail={tabItemThumbnail(item.id, 'collection')} collection={item} textQuery={textQuery} />
-    }
-}
-const PageTab: TabType = {
-    name: 'page', render: (index, item, textQuery) => {
-        return <Page key={index} thumbnail={tabItemThumbnail(item.id, 'page')} page={item} textQuery={textQuery} />
-    }
-}
-
 const Search: NextPage = () => {
     const router = useRouter()
-    const { q, page, limit, t } = router.query
+    const { t: tab = "article" } = router.query
 
-    let defaultTab = ArticleTab
-    if (t == CollectionTab.name) defaultTab = CollectionTab
-    else if (t == PageTab.name) defaultTab = PageTab
-
-    const [tab, setTab] = useState<TabType>(defaultTab)
     const [itemCount, setItemCount] = useState<number>(0)
 
-
-    const onTabChanged = (tab: TabType) => {
-        setTab(tab)
-
-        router.push({
-            pathname: '/search',
-            query: { q: q, page: page, limit: limit, t: tab.name },
-        }, undefined, { shallow: true })
-    }
 
     const onSearchComplete = (itemCount: number) => {
         setItemCount(itemCount)
     }
 
-    return (<Layout showHeader={false}>
-        <div>
-            <div className={styles.searchHeader}>
+    return (
+        <Layout>
+            <Container className={styles.searchContainer} fluid>
                 <div className={styles.searchBoxContainer}>
                     <SearchBox />
-                    <div className={styles.searchResultCount}>
+                    <Container className={styles.searchResultCount}>
                         <p>Your search returned <b>{itemCount}</b> results</p>
-                    </div>
+                    </Container>
                 </div>
-            </div>
-            <div className={styles.grid}>
-                <div className={styles.gridCenter}>
-                    <ul className={styles.navTabs}>
-                        <li>
-                            <button className={styles.navButton} disabled={tab == ArticleTab} onClick={() => onTabChanged(ArticleTab)}>Articles</button>
-                        </li>
-                        <li>
-                            <button className={styles.navButton} disabled={tab == CollectionTab} onClick={() => onTabChanged(CollectionTab)}>Collections</button>
-                        </li>
-                        <li>
-                            <button className={styles.navButton} disabled={tab == PageTab} onClick={() => onTabChanged(PageTab)}>Pages</button>
-                        </li>
-                    </ul>
+                <Container>
+                    <Nav variant="tabs" defaultActiveKey={String(tab)}>
+                        <Nav.Item>
+                            <Link href={{ pathname: '/search', query: { ...router.query, t: 'article' } }} passHref>
+                                <Nav.Link eventKey="article">Articles</Nav.Link>
+                            </Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Link href={{ pathname: '/search', query: { ...router.query, t: 'collection' } }} passHref>
+                                <Nav.Link eventKey="collection">Collections</Nav.Link>
+                            </Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Link href={{ pathname: '/search', query: { ...router.query, t: 'page' } }} passHref>
+                                <Nav.Link eventKey="page">Pages</Nav.Link>
+                            </Link>
+                        </Nav.Item>
+                    </Nav>
                     <div className={styles.resultsContainer}>
-                        <SearchResultTab tab={tab} onSearchComplete={onSearchComplete} />
+                        <SearchResultTab onSearchComplete={onSearchComplete} />
                     </div>
-                </div>
-            </div>
-        </div>
-    </Layout>)
+                </Container>
+            </Container>
+        </Layout>
+    )
 
 }
 
 interface TabProps {
-    tab: TabType
     onSearchComplete(total: number)
 }
 
-const SearchResultTab = ({ tab, onSearchComplete }: TabProps) => {
+const SearchResultTab = ({ onSearchComplete }: TabProps) => {
     const router = useRouter()
-    const { q, page, limit } = router.query
-    const searchUrl = `${publicRuntimeConfig.metadataServiceUrl}/${tab.name}/search`
+    const { q, page, limit, t: tab = 'article' } = router.query
+
+    const searchUrl = `${publicRuntimeConfig.metadataServiceUrl}/${tab}/search`
     const searchQueries = { q: q, page: page, limit: limit }
     const { data, isLoading, isError } = useScanService<SearchResultType>(searchUrl, searchQueries)
 
     const onPaginationChanged = (page: number, limit: number) => {
         router.push({
             pathname: '/search',
-            query: { q: q, page: page, limit: limit, t: tab.name },
+            query: { ...router.query, page: page, limit: limit },
         }, undefined, { shallow: true })
+    }
+
+    const tabItemThumbnail = (id: string, type: string) => {
+        return `${publicRuntimeConfig.serviceUrl}/image/thumbnail?id=${id}&type=${type}`
     }
 
     useEffect(() => {
@@ -121,16 +96,26 @@ const SearchResultTab = ({ tab, onSearchComplete }: TabProps) => {
         }
     }, [onSearchComplete, data])
 
-    if (isError) return (<><p>Sorry something went wrong</p></>)
-    if (isLoading) return <PuffLoader size={150} />
-    if (data.total == 0) return (<><p>Sorry no results were found for <b>{q}</b></p></>)
+
+    if (isError) return <p>Sorry something went wrong</p>
+    if (isLoading) return <MultiCardLoader count={Number(limit)} />
+    if (data.total == 0) return <p>Sorry no results were found for <b>{q}</b></p>
     if (data.pageCount < Number(page)) onPaginationChanged(1, Number(limit))
 
 
 
     return (
         <>
-            {data.items.map((item, i) => tab.render(i, item, data.query))}
+            {data.items.map((item, i) => {
+                // tab.render(i, item, data.query)
+                if (tab == "article") {
+                    return <Article key={i} article={item} thumbnail={tabItemThumbnail(item.id, 'article')} textQuery={data.query} />
+                } else if (tab == "collection") {
+                    return <Collection key={i} thumbnail={tabItemThumbnail(item.id, 'collection')} collection={item} textQuery={data.query} />
+                } else if (tab == "page") {
+                    return <Page key={i} thumbnail={tabItemThumbnail(item.id, 'page')} page={item} textQuery={data.query} />
+                }
+            })}
             < Pagination page={Number(page)} limit={Number(limit)} pageCount={data.pageCount} onPaginationChanged={onPaginationChanged} />
         </>
     )

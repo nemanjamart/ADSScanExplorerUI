@@ -19,7 +19,7 @@
 .titleText {
     color: white;
     font-weight: 700;
-    font-size: 40px;
+    font-size: calc(100% + 1vw);
     white-space: nowrap;
 }
 

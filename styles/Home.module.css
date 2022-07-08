@@ -1,5 +1,3 @@
-.searchArea {
-  width: 30%;
-  margin: auto;
-  margin-top: 20px;
+.searchArea > div {
+  max-width: 780px;
 }

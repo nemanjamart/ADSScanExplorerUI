@@ -1,0 +1,12 @@
+// Override default variables before the import
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1320px
+);
+
+$primary: #1c459b;
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';

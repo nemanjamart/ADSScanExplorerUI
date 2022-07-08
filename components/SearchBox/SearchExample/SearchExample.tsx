@@ -1,53 +1,52 @@
 
 import React from 'react';
 import styles from './SearchExample.module.css'
-
-
+import ListGroup from 'react-bootstrap/ListGroup'
+import Button from 'react-bootstrap/Button'
+import Card from 'react-bootstrap/Card'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 interface SearchExampleProps {
     onExampleSelected: (example: string) => void
 }
 
 const SearchExample = ({ onExampleSelected }: SearchExampleProps) => {
     return (
-        <div className={styles.container}>
-            <p>Search examples</p>
-            <hr className={styles.divider} />
-            <div className={styles.descriptionListGrid}>
-                <DescriptionListItem onExampleSelected={onExampleSelected} title={"publication"} example={"bibstem:ApJ"} />
-                <DescriptionListItem onExampleSelected={onExampleSelected} title={"volume"} example={"bibstem:ApJ volume:333"} />
-                <DescriptionListItem onExampleSelected={onExampleSelected} title={"article"} example={"bibcode:1988ApJ...333L..69M"} />
-                <DescriptionListItem onExampleSelected={onExampleSelected} title={"page type"} example={"bibstem:adga pagetype:FrontMatter"} />
-                <DescriptionListItem onExampleSelected={onExampleSelected} title={"full text"} example={"full:\"infrared\""} />
-            </div>
-        </div>
+        <Card id={styles.container}>
+            <Card.Header>Search examples</Card.Header>
+            <ListGroup variant="flush">
+                <ExampleListItem onExampleSelected={onExampleSelected} title={"Publication"} example={"bibstem:ApJ"} />
+                <ExampleListItem onExampleSelected={onExampleSelected} title={"Volume"} example={"bibstem:ApJ volume:333"} />
+                <ExampleListItem onExampleSelected={onExampleSelected} title={"Article"} example={"bibcode:1988ApJ...333L..69M"} />
+                <ExampleListItem onExampleSelected={onExampleSelected} title={"Page type"} example={"bibstem:adga pagetype:FrontMatter"} />
+                <ExampleListItem onExampleSelected={onExampleSelected} title={"Full text"} example={"full:\"infrared\""} />
+            </ListGroup>
+        </Card>
     )
 }
 
-interface DescriptionListItem {
+interface ExampleListItemProps {
     onExampleSelected: (example: string) => void
     title: string
     example: string
 }
 
-const DescriptionListItem = ({ onExampleSelected, title, example }: DescriptionListItem) => {
+const ExampleListItem = ({ onExampleSelected, title, example }: ExampleListItemProps) => {
     return (
-        <dl className={styles.descriptionListItem}>
-            <dt className={styles.descriptionListTitle}>{title}</dt>
-            <dd className={styles.descriptionListValue}>
-                <DescriptionListButton onExampleSelected={onExampleSelected} example={example} />
-            </dd>
-        </dl>)
+        <Row className='g-0'>
+            <Col>
+                <ListGroup.Item variant='secondary'><b>{title}</b></ListGroup.Item>
+            </Col>
+            <Col>
+                <ListGroup.Item className={styles.searchExampleAction} variant='light' action onClick={() => onExampleSelected(example)} >
+                    {example}
+                </ListGroup.Item>
+            </Col>
+        </Row>
+    )
 }
 
-interface DescriptionListButtonProps {
-    onExampleSelected: (example: string) => void
-    example: string
-}
-const DescriptionListButton = ({ onExampleSelected, example }: DescriptionListButtonProps) => {
-    return (<button className={styles.textLinkButton} onClick={() => onExampleSelected(example)} >
-        {example}
-    </button>)
-}
 
 
 export default SearchExample
