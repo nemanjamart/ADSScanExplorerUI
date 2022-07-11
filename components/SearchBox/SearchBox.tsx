@@ -15,10 +15,10 @@ interface SearchBoxProps {
 
 const SearchBox = ({ showExample = false }: SearchBoxProps) => {
     const router = useRouter()
-    const { q } = router.query
+    const { q, t: tab = 'article' } = router.query
     const [query, setQuery] = useState<string>(q ? String(q) : '');
 
-    const hrefSearch = { pathname: '/search', query: { q: query, page: 1, limit: 10 } }
+    const hrefSearch = { pathname: '/search', query: { q: query, page: 1, limit: 10, t: tab} }
 
 
     const appendQuery = (q: string) => {

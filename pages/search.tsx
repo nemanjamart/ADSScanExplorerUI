@@ -25,7 +25,6 @@ const Search: NextPage = () => {
 
     const [itemCount, setItemCount] = useState<number>(0)
 
-
     const onSearchComplete = (itemCount: number) => {
         setItemCount(itemCount)
     }
@@ -107,7 +106,6 @@ const SearchResultTab = ({ onSearchComplete }: TabProps) => {
     return (
         <>
             {data.items.map((item, i) => {
-                // tab.render(i, item, data.query)
                 if (tab == "article") {
                     return <Article key={i} article={item} thumbnail={tabItemThumbnail(item.id, 'article')} textQuery={data.query} />
                 } else if (tab == "collection") {
