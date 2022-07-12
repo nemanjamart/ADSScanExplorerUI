@@ -9,7 +9,7 @@ interface MultiCardLoaderProps {
 const MultiCardLoader = ({ count }: MultiCardLoaderProps) => (
     <>
         {[...Array(count)].map((value, i) =>
-            <Placeholder key={i} as={ItemCard} placeholder={true} />
+            <Placeholder key={i} as={ItemCard} showPlaceholder={true} />
         )}
 
     </>
