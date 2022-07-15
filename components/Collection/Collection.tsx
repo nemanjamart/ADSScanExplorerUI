@@ -13,7 +13,7 @@ const Collection = ({ collection, thumbnail, textQuery = '' }: CollectionProps) 
     const href = `${process.env.NEXT_PUBLIC_BASE_PATH}/manifest/${collection.id}${query}`
 
     return (
-        <a href={href}>
+        <a className='text-reset text-decoration-none' href={href}>
             <div>
                 <ItemCard title={`${collection.journal}${collection.volume}`} text={`${collection.pages} pages`} thumbnail={thumbnail} />
             </div>
