@@ -16,6 +16,11 @@ const nextConfig = {
     metadataServiceUrl: `${process.env.PUBLIC_SCAN_SERVICE_URL}/metadata`,
     bootstrapServiceUrl: `${process.env.PUBLIC_BOOTSTRAP_SERVICE_URL}`,
   },
+  webpack: (config, { isServer, webpack }) => { 
+
+    config.plugins.push(new webpack.IgnorePlugin(/@blueprintjs\/(core|icons)/));
+    return config;
+  }
 }
 
 module.exports = nextConfig

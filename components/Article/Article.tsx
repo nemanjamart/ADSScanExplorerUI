@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import useScanService from '../../hooks/useScanService'
 import ArticleType from '../../types/article'
 import ItemCard from '../ItemCard/ItemCard'
@@ -28,12 +27,15 @@ const Article = ({ article, thumbnail, textQuery }: ArticleProps) => {
         }
     }
 
+    const query = textQuery ? `?full=${textQuery}`: ''
+    const href = `${process.env.NEXT_PUBLIC_BASE_PATH}/manifest/${article.id}${query}`
+
     return (
-        <Link href={{ pathname: `/manifest/${article.id}`, query: textQuery ? { full: textQuery } : '' }} >
+        <a href={href}>
             <div>
                 <ArticleCard />
             </div>
-        </Link>
+        </a>
     )
 }
 

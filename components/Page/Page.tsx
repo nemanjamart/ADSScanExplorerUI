@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import styles from './Page.module.css'
 import PageType from '../../types/page'
 import ItemCard from '../ItemCard/ItemCard'
@@ -10,23 +9,15 @@ type PageProps = {
 }
 
 const Page = ({ page, textQuery, thumbnail }: PageProps) => {
-    const query = {
-        p: page.volume_page_num,
-        full: textQuery
-    }
-
-    for (const key of Object.keys(query)) {
-        if (!query[key] || query[key] == "") {
-            delete query[key]
-        }
-    }
+    const query = `?p=${page.volume_page_num}` + (textQuery ? `&full=${textQuery}` : '')
+    const href = `${process.env.NEXT_PUBLIC_BASE_PATH}/manifest/${page.collection_id}${query}`
 
     return (
-        <Link href={{ pathname: `/manifest/${page.collection_id}`, query: query }} >
+        <a href={href} >
             <div>
                 <ItemCard title={`Page ${page.label}`} text={`Page ${page.volume_page_num} in ${page.journal}${page.volume}`} thumbnail={thumbnail} />
             </div>
-        </Link>
+        </a>
     )
 }
 

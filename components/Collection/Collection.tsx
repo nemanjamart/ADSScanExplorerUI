@@ -1,8 +1,5 @@
-import Link from 'next/link'
 import CollectionType from '../../types/collection'
 import styles from './Collection.module.css'
-import ProtectedImage from '../ProtectedImage/ProtectedImage'
-import Card from 'react-bootstrap/Card'
 import ItemCard from '../ItemCard/ItemCard'
 
 type CollectionProps = {
@@ -12,13 +9,15 @@ type CollectionProps = {
 }
 
 const Collection = ({ collection, thumbnail, textQuery = '' }: CollectionProps) => {
+    const query = textQuery ? `?full=${textQuery}` : ''
+    const href = `${process.env.NEXT_PUBLIC_BASE_PATH}/manifest/${collection.id}${query}`
 
     return (
-        <Link href={{ pathname: `/manifest/${collection.id}`, query: textQuery ? { full: textQuery } : '' }} >
+        <a href={href}>
             <div>
                 <ItemCard title={`${collection.journal}${collection.volume}`} text={`${collection.pages} pages`} thumbnail={thumbnail} />
             </div>
-        </Link>
+        </a>
     )
 }
 

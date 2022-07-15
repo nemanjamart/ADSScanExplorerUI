@@ -9,6 +9,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import App from 'next/app'
 import ErrorProvider from '../providers/AlertProvider'
 import '../styles/bootstrap.scss'
+import { SSRProvider } from 'react-bootstrap';
 
 config.autoAddCss = false
 
@@ -26,9 +27,13 @@ Router.events.on('routeChangeError', () => NProgress.done());
 
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <ErrorProvider>
-    <Component {...pageProps} />
-  </ErrorProvider>
+  return (
+    <SSRProvider >
+      <ErrorProvider>
+        <Component {...pageProps} />
+      </ErrorProvider>
+    </SSRProvider>
+  )
 }
 
 // Need entire app to be SSR due to the nature of docker setup

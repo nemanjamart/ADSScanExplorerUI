@@ -5,7 +5,6 @@ import SearchBox from '../../components/SearchBox/SearchBox';
 import styles from '../../styles/Manifest.module.css'
 import Mirador from '../../components/Mirador/Mirador';
 import useBootstrap from '../../hooks/useBootstrap';
-import { useEffect } from 'react';
 import Container from 'react-bootstrap/Container'
 
 const { publicRuntimeConfig } = getConfig()
@@ -23,9 +22,19 @@ const Manifest: NextPage<ManifestProps> = ({ id, page, textQuery }: ManifestProp
         id: 'ads_mirador_viewer',
         windows: [{
             imageToolsEnabled: true,
+            allowClose: false,
+            allowFullscreen: true,
+            allowMaximize: false,
+            allowTopMenuButton: true,
             loadedManifest: `${publicRuntimeConfig.manifestServiceUrl}/${id}/manifest.json`,
             canvasIndex: page - 1,
-            defaultSearchQuery: textQuery
+            defaultSearchQuery: textQuery,
+            draggingEnabled: false,
+            sideBarPanel: 'search',
+            views: [
+                { key: 'single' },
+                { key: 'book' },
+            ],
         }],
         requests: {
             preprocessors: [
@@ -46,9 +55,16 @@ const Manifest: NextPage<ManifestProps> = ({ id, page, textQuery }: ManifestProp
             ajaxHeaders: {
                 'Authorization': "Bearer " + authData?.access_token
             }
-        }
+        },
+        thumbnailNavigation: {
+            displaySettings: false
+        },
+        workspaceControlPanel: {
+            enabled: false,
+        },
     }
 
+    
     return (
         <Layout>
             <div className='d-flex mb-2'>
