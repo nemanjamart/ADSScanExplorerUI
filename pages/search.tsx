@@ -39,7 +39,7 @@ const Search: NextPage = () => {
                     </Container>
                 </div>
                 <Container>
-                    <Nav variant="tabs" defaultActiveKey={String(tab)}>
+                    <Nav variant="tabs" activeKey={String(tab)}>
                         <Nav.Item>
                             <Link href={{ pathname: '/search', query: { ...router.query, t: 'article' } }} passHref>
                                 <Nav.Link eventKey="article">Articles</Nav.Link>
