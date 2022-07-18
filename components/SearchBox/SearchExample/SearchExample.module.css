@@ -3,5 +3,7 @@
 }
 
 .searchExampleAction {
-    white-space: pre !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

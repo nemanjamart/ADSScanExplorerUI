@@ -34,11 +34,11 @@ interface ExampleListItemProps {
 
 const ExampleListItem = ({ onExampleSelected, title, example }: ExampleListItemProps) => {
     return (
-        <Row className='g-0'>
+        <Row className='g-0 flex-nowrap'>
             <Col>
-                <ListGroup.Item variant='secondary'><b>{title}</b></ListGroup.Item>
+                <ListGroup.Item className='text-truncate' variant='secondary'><b>{title}</b></ListGroup.Item>
             </Col>
-            <Col>
+            <Col className='text-truncate'>
                 <ListGroup.Item className={styles.searchExampleAction} variant='light' action onClick={() => onExampleSelected(example)} >
                     {example}
                 </ListGroup.Item>
