@@ -35,9 +35,9 @@ const SearchBox = ({ showExample = false }: SearchBoxProps) => {
         <Container>
             <QuickField onClick={appendQuery} />
             <div className={styles.inputGroup} >
-                <input type="text" className={styles.searchBox} placeholder="Search" onChange={(e) => setQuery(e.target.value)} value={query} onKeyDown={onKeyDown} />
+                <input id="search-box-input" type="text" className={styles.searchBox} placeholder="Search" onChange={(e) => setQuery(e.target.value)} value={query} onKeyDown={onKeyDown} />
                 <Link href={hrefSearch} passHref>
-                    <button className={styles.button}>
+                    <button id="search-box-btn" className={styles.button}>
                         <FontAwesomeIcon icon={faSearch} inverse />
                     </button>
                 </Link>

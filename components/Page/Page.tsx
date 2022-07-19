@@ -13,7 +13,7 @@ const Page = ({ page, textQuery, thumbnail }: PageProps) => {
     const href = `${process.env.NEXT_PUBLIC_BASE_PATH}/manifest/${page.collection_id}${query}`
 
     return (
-        <a className='text-reset text-decoration-none' href={href} >
+        <a className='anchor-manifest-viewer text-reset text-decoration-none' href={href} >
             <div>
                 <ItemCard title={`Page ${page.label}`} text={`Page ${page.volume_page_num} in ${page.journal}${page.volume}`} thumbnail={thumbnail} />
             </div>

@@ -2,12 +2,9 @@ import { useEffect } from "react";
 import styles from "./Mirador.module.css"
 import * as React from "react";
 
-
 interface MiradorProps {
     config: any
 }
-
-
 
 const Mirador = ({ config }: MiradorProps) => {
     useEffect(() => {

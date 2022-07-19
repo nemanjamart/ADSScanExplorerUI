@@ -31,7 +31,7 @@ const Article = ({ article, thumbnail, textQuery }: ArticleProps) => {
     const href = `${process.env.NEXT_PUBLIC_BASE_PATH}/manifest/${article.id}${query}`
 
     return (
-        <a className='text-reset text-decoration-none' href={href}>
+        <a className='anchor-manifest-viewer text-reset text-decoration-none' href={href}>
             <div>
                 <ArticleCard />
             </div>

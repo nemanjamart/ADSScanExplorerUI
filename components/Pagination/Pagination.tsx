@@ -46,7 +46,7 @@ const Pagination = ({ page, limit, pageCount, onPaginationChanged }: PaginationP
             <div>
                 <label>
                     Per page
-                    <select className={styles.flatSelect} value={limit} onChange={(e) => { onLimitChanged(getEventValue(e)) }}>
+                    <select id="pagination-limit" className={styles.flatSelect} value={limit} onChange={(e) => { onLimitChanged(getEventValue(e)) }}>
                         {Array.from(Array(10).keys()).map((val) => <option key={val} value={(val + 1) * 10}>{(val + 1) * 10}</option>)}
                     </select>
                 </label>
@@ -71,19 +71,6 @@ const Pagination = ({ page, limit, pageCount, onPaginationChanged }: PaginationP
 
                 </ButtonGroup>
             </ButtonToolbar>
-            {/* <button className={styles.pageNavButton} onClick={() => onPageChanged(page - 1)} disabled={page <= 1}>
-                    <FontAwesomeIcon icon={faChevronCircleLeft} />
-                    prev
-                </button>
-                <label>
-                    <input key={page} id={styles.pageInput} type='number' className='no-spinner' defaultValue={page} onKeyDown={pageNumberInputKeyDown} />
-                    of {pageCount}
-                </label>
-                <button className={styles.pageNavButton} onClick={() => onPageChanged(page + 1)} disabled={page >= pageCount}>
-                    next
-                    <FontAwesomeIcon icon={faChevronCircleRight} />
-                </button> */}
-
         </div>
     )
 }
