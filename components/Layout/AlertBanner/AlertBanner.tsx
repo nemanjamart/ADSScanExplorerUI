@@ -1,11 +1,15 @@
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import useError from '../../../hooks/useAlert';
+import useAlert from '../../../hooks/useAlert';
 import styles from './AlertBanner.module.css'
 
+
+/**
+ * Show an alert banner when an alert or error is added to the alert provider.
+ */
 const AlertBanner = () => {
 
-    const { alert, removeAlert } = useError();
+    const { alert, removeAlert } = useAlert();
 
     if (!alert || !alert.message) {
         return <></>

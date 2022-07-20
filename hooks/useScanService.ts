@@ -21,6 +21,12 @@ const fetchGeneric = <T>(url, headers) => fetch(url, { headers: headers }).then(
     }
 })
 
+/**
+ * Hook used to query the scan service API.
+ * 
+ * Return type is generic and caller is responsible to provide expected result type.
+ * Errors is returned as ServiceError type.
+ */
 function useScanService<T>(url, queries) {
 
     const { data: authData, error: authError } = useBootstrap()

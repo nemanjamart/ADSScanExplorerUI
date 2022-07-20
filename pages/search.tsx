@@ -19,6 +19,9 @@ import MultiCardLoader from '../components/ContentLoader/MultiCardLoader';
 
 const { publicRuntimeConfig } = getConfig()
 
+/**
+ * Page that performs a search based on query parameters and renders the result.
+ */    
 const Search: NextPage = () => {
     const router = useRouter()
     const { t: tab = "article" } = router.query

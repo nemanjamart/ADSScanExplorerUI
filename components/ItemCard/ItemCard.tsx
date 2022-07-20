@@ -15,6 +15,11 @@ type ItemCardProps = {
     loadingExtra?: boolean
 }
 
+/**
+ * Card with generalized content used to display search result (article, collection or page).
+ * 
+ * Can render a placeholder or a partial placeholder while content loads.
+ */
 const ItemCard = ({ title, text, thumbnail, subtitle, footer, showPlaceholder = false, loadingExtra = false }: ItemCardProps) => {
     const placeholder = () => {
         return <>

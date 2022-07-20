@@ -1,5 +1,9 @@
 import Head from 'next/head'
 
+
+/**
+ * Renders metadata.
+ */
 const Meta = () => {
     return (
         <Head>

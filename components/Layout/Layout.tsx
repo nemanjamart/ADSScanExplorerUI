@@ -11,6 +11,9 @@ type Props = {
     children: React.ReactNode
 }
 
+/**
+ * Layout component containing all custom components used to render this app.
+ */
 const Layout = ({ showHeader = false, children }: Props) => {
     return (
         <>

@@ -3,6 +3,9 @@ import styles from './Header.module.css'
 import Image from 'next/image'
 import { Container } from 'react-bootstrap'
 
+/**
+ * Render the header component.
+ */
 const Header = () => {
     return (
         <header className={styles.container}>

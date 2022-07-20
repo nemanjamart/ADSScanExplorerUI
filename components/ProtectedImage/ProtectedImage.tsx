@@ -20,6 +20,11 @@ const fetcher = (url, token) => fetch(url, { method: "GET", headers: { Authoriza
     .then(res => res.blob())
     .then(blob => URL.createObjectURL(blob))
 
+
+/**
+ * Component used to fetch and render images that require authentication. 
+ * The auth token is fetched using the bootstrap hook.
+ */
 const ProtectedImage = ({ src, className, alt, width, height }: ProtectedImageProps) => {
     const { data: authData } = useBootstrap()
     const { data: image, error } = useSWR([src, authData?.access_token], fetcher)

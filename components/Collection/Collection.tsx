@@ -8,6 +8,9 @@ type CollectionProps = {
     textQuery: string
 }
 
+/**
+ * Collection component used to visualize a collection search result 
+ */
 const Collection = ({ collection, thumbnail, textQuery = '' }: CollectionProps) => {
     const query = textQuery ? `?full=${textQuery}` : ''
     const href = `${process.env.NEXT_PUBLIC_BASE_PATH}/manifest/${collection.id}${query}`

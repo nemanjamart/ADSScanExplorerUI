@@ -6,6 +6,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Container, Navbar, Nav } from 'react-bootstrap'
 
+/**
+ * Render the topmost navigation bar.
+ */
 const AdsNavbar: FC<{}> = () => {
     return (
         <>

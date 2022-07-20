@@ -15,10 +15,12 @@ interface PaginationProps {
     onPaginationChanged(page: number, perPage)
 }
 
+/**
+ * Pagination component with per-page and page navigation controls. 
+ */
 const Pagination = ({ page, limit, pageCount, onPaginationChanged }: PaginationProps) => {
     const pageNumberInputKeyDown = (e) => {
-        // React bug with numeric input, we have to 
-        // validate the input by our selves. 
+        /** React bug with numeric input, we have to validate the input by our selves.  */
         if (!/[0-9]/.test(e.key) && e.key != "Backspace") {
             e.preventDefault();
         }

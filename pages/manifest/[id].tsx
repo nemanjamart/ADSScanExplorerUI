@@ -15,6 +15,9 @@ interface ManifestProps {
     textQuery: string
 }
 
+/**
+ * Page that visualizes the IIIF manifest using the Mirador component.
+ */    
 const Manifest: NextPage<ManifestProps> = ({ id, page, textQuery }: ManifestProps) => {
     const { data: authData } = useBootstrap()
 

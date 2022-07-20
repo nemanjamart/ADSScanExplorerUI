@@ -8,11 +8,14 @@ export const AlertContext = React.createContext({
   });
 
 
-  type ErrorProviderProps = {
+  type AlertProviderProps = {
     children: React.ReactNode
 }
 
-const ErrorProvider = ({ children }: ErrorProviderProps) => {
+/**
+ * Provider used to create new alerts.
+ */    
+const AlertProvider = ({ children }: AlertProviderProps) => {
     const [alert, setAlert] = useState(null);
 
     const removeAlert = () => setAlert(null);
@@ -34,4 +37,4 @@ const ErrorProvider = ({ children }: ErrorProviderProps) => {
 }
 
 
-export default ErrorProvider
+export default AlertProvider

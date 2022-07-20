@@ -6,6 +6,9 @@ interface MultiCardLoaderProps {
     count: number
 }
 
+/**
+ * Displays multiple placeholders for search result (article, collection or page) 
+ */
 const MultiCardLoader = ({ count }: MultiCardLoaderProps) => (
     <>
         {[...Array(count)].map((value, i) =>

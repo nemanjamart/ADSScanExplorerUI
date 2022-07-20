@@ -6,6 +6,9 @@ interface MiradorProps {
     config: any
 }
 
+/**
+ * IIIF image viewer used to process and visualize the IIIF manifest.
+ */
 const Mirador = ({ config }: MiradorProps) => {
     useEffect(() => {
         const initializeMirador = async () => {

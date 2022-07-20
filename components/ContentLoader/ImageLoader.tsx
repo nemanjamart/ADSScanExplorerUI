@@ -7,6 +7,9 @@ interface ImageLoaderProps {
     className?: string
 }
 
+/**
+ * Displays a placeholder while an image loads 
+ */
 const ImageLoader = ({ width, height, className }: ImageLoaderProps) => (
 
     <ContentLoader

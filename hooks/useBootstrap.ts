@@ -10,6 +10,12 @@ const fetchAuthWithCookies = (url, cookies) =>
     fetch(url, { method: 'GET', headers: { 'Accept': 'application/json', 'Cookie': cookies }, credentials: 'include' })
         .then(r => r.json().then(data => data as BootstrapType))
 
+
+/**
+ * Bootstrap hook used to retrieve auth token required to contact the scan service.
+ * 
+ * The cached token will be returned unless it has expired.
+ */       
 function useBootstrap() {
 
     const cookies = getCookies({ httpOnly: true });
