@@ -62,6 +62,9 @@ const Manifest: NextPage<ManifestProps> = ({ id, page, textQuery }: ManifestProp
         thumbnailNavigation: {
             displaySettings: false
         },
+        workspace: {
+            showZoomControls: true
+        },
         workspaceControlPanel: {
             enabled: false,
         },
