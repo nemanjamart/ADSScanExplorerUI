@@ -73,9 +73,6 @@ const Manifest: NextPage<ManifestProps> = ({ id, page, textQuery }: ManifestProp
     
     return (
         <Layout>
-            <div className='d-flex mb-2'>
-                <SearchBox />
-            </div>
             <Container fluid className="d-flex flex-column h-100">
                 <Mirador config={config} />
             </Container>
