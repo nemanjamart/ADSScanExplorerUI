@@ -9,16 +9,17 @@ import { Container } from 'react-bootstrap'
 type Props = {
     showHeader?: boolean
     children: React.ReactNode
+    adsUrl?: string
 }
 
 /**
  * Layout component containing all custom components used to render this app.
  */
-const Layout = ({ showHeader = false, children }: Props) => {
+const Layout = ({ showHeader = false, children, adsUrl }: Props) => {
     return (
         <>
             <Meta />
-            <Navbar />
+            <Navbar adsUrl={adsUrl}/>
             <AlertBanner />
             {showHeader ? <Header /> : ''}
             <Container className="d-flex flex-column h-100 pt-2 m-0" fluid>{children}</Container>

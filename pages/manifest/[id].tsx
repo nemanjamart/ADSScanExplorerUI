@@ -1,7 +1,6 @@
 import type { NextPage } from 'next'
 import Layout from '../../components/Layout/Layout'
 import getConfig from 'next/config'
-import SearchBox from '../../components/SearchBox/SearchBox';
 import styles from '../../styles/Manifest.module.css'
 import Mirador from '../../components/Mirador/Mirador';
 import useBootstrap from '../../hooks/useBootstrap';
@@ -72,7 +71,7 @@ const Manifest: NextPage<ManifestProps> = ({ id, page, textQuery }: ManifestProp
 
     
     return (
-        <Layout>
+        <Layout adsUrl={`${process.env.NEXT_PUBLIC_ADS_DEFAULT_URL}/abs/${id}/abstract`}>
             <Container fluid className="d-flex flex-column h-100">
                 <Mirador config={config} />
             </Container>
