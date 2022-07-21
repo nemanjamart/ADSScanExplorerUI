@@ -12,12 +12,13 @@ interface ManifestProps {
     id: string
     page: number
     textQuery: string
+    isArticle: boolean
 }
 
 /**
  * Page that visualizes the IIIF manifest using the Mirador component.
  */    
-const Manifest: NextPage<ManifestProps> = ({ id, page, textQuery }: ManifestProps) => {
+const Manifest: NextPage<ManifestProps> = ({ id, page, textQuery, isArticle = false }: ManifestProps) => {
     const { data: authData } = useBootstrap()
 
     const config = {
@@ -69,9 +70,11 @@ const Manifest: NextPage<ManifestProps> = ({ id, page, textQuery }: ManifestProp
         },
     }
 
-    
+
+    const adsref = isArticle ? `${process.env.NEXT_PUBLIC_ADS_DEFAULT_URL}/abs/${id}/abstract` : undefined;
+
     return (
-        <Layout adsUrl={`${process.env.NEXT_PUBLIC_ADS_DEFAULT_URL}/abs/${id}/abstract`}>
+        <Layout adsUrl={adsref}>
             <Container fluid className="d-flex flex-column h-100">
                 <Mirador config={config} />
             </Container>
@@ -79,8 +82,8 @@ const Manifest: NextPage<ManifestProps> = ({ id, page, textQuery }: ManifestProp
 }
 
 Manifest.getInitialProps = async ({ query }) => {
-    const { id, full = '', p = 1 } = query;
-    const props: ManifestProps = { id: String(id), textQuery: String(full), page: Number(p) }
+    const { id, full = '', p = 1, art = false } = query;
+    const props: ManifestProps = { id: String(id), textQuery: String(full), page: Number(p), isArticle: Boolean(art) }
     return props
 }
 
