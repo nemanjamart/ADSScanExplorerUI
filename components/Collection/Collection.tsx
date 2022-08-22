@@ -13,14 +13,10 @@ type CollectionProps = {
  */
 const Collection = ({ collection, thumbnail, textQuery = '' }: CollectionProps) => {
     const query = textQuery ? `?full=${textQuery}` : ''
-    const href = `${process.env.NEXT_PUBLIC_BASE_PATH}/manifest/${collection.id}${query}`
+    const href = `/manifest/${collection.id}${query}`
 
     return (
-        <a className='anchor-manifest-viewer text-reset text-decoration-none' href={href}>
-            <div>
-                <ItemCard title={`${collection.journal}${collection.volume}`} text={`${collection.pages} pages`} thumbnail={thumbnail} />
-            </div>
-        </a>
+        <ItemCard title={`${collection.journal}${collection.volume}`} text={`${collection.pages} pages`} thumbnail={thumbnail} href={href}/>
     )
 }
 

@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card'
 import Placeholder from 'react-bootstrap/Placeholder'
 import ImageLoader from '../ContentLoader/ImageLoader'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import {useRouter} from 'next/router'
 
 type ItemCardProps = {
     title?: string
@@ -13,6 +14,7 @@ type ItemCardProps = {
     footer?: string
     showPlaceholder?: boolean
     loadingExtra?: boolean
+    href?: string
 }
 
 /**
@@ -20,11 +22,14 @@ type ItemCardProps = {
  * 
  * Can render a placeholder or a partial placeholder while content loads.
  */
-const ItemCard = ({ title, text, thumbnail, subtitle, footer, showPlaceholder = false, loadingExtra = false }: ItemCardProps) => {
+const ItemCard = ({ title, text, thumbnail, subtitle, footer, showPlaceholder = false, loadingExtra = false , href}: ItemCardProps) => {
+
+    const router = useRouter()
+
     const placeholder = () => {
         return <>
             <Card.Img as={ImageLoader} width={400} height={200} />
-            <Card.Body>
+            <Card.Body onClick={(e) => {e.stopPropagation()}}>
                 <Placeholder as={Card.Title} animation="glow">
                     <Placeholder xs={6} />
                 </Placeholder>
@@ -39,7 +44,7 @@ const ItemCard = ({ title, text, thumbnail, subtitle, footer, showPlaceholder = 
     const partial = () => {
         return <>
             <Card.Img className={styles.thumbnail} variant="top" src={thumbnail} alt="Thumbnail" width={400} height={200} as={ProtectedImage} />
-            <Card.Body>
+            <Card.Body onClick={(e) => {e.stopPropagation()}}>
                 <Placeholder as={Card.Title} animation="glow">
                     <Placeholder xs={6} />
                 </Placeholder>
@@ -55,7 +60,7 @@ const ItemCard = ({ title, text, thumbnail, subtitle, footer, showPlaceholder = 
     const card = () => {
         return <>
             <Card.Img className={styles.thumbnail} variant="top" src={thumbnail} alt="Thumbnail" width={400} height={200} as={ProtectedImage} />
-            <Card.Body>
+            <Card.Body onClick={(e) => {e.stopPropagation()}}>
                 <OverlayTrigger placement='auto' overlay={<Tooltip>{title}</Tooltip>}>
                     <Card.Title className='text-truncate'>{title}</Card.Title>
                 </OverlayTrigger>
@@ -70,7 +75,7 @@ const ItemCard = ({ title, text, thumbnail, subtitle, footer, showPlaceholder = 
     }
 
     return (
-        <Card className={styles.card}>
+        <Card className={styles.card} onClick={() => {router.push(href)}}>
             {showPlaceholder ? placeholder() : loadingExtra ? partial() : card()}
         </Card>
     )

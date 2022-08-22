@@ -19,28 +19,25 @@ const Article = ({ article, thumbnail, textQuery }: ArticleProps) => {
     const extraUrl = `${publicRuntimeConfig.metadataServiceUrl}/article/extra/${article.bibcode}`
     const { data, isLoading, isError } = useScanService<ArticleExtraType>(extraUrl, {})
 
+    let query = '?art=true'
+    query += textQuery ? `&full=${textQuery}` : ''
+    const href = `/manifest/${article.id}${query}`
 
     /** Article fetch content from multiple sources, display partially loaded result if required */
     const ArticleCard = () => {
         if (isLoading) {
-            return <ItemCard subtitle={article.bibcode} text={`${article.pages} pages`} thumbnail={thumbnail} loadingExtra={true} />
+            return <ItemCard subtitle={article.bibcode} text={`${article.pages} pages`} thumbnail={thumbnail} loadingExtra={true} href={href}/>
         } else if (data && data.title && data.author && !isError) {
-            return <ItemCard title={data.title.toString()} subtitle={article.bibcode} text={`${article.pages} pages`} footer={data.author.toString()} thumbnail={thumbnail} />
+            return <ItemCard title={data.title.toString()} subtitle={article.bibcode} text={`${article.pages} pages`} footer={data.author.toString()} thumbnail={thumbnail} href={href}/>
         } else {
-            return <ItemCard title={article.bibcode} text={`${article.pages} pages`} thumbnail={thumbnail} />
+            return <ItemCard title={article.bibcode} text={`${article.pages} pages`} thumbnail={thumbnail} href={href}/>
         }
     }
 
-    let query = '?art=true'
-    query += textQuery ? `&full=${textQuery}` : ''
-    const href = `${process.env.NEXT_PUBLIC_BASE_PATH}/manifest/${article.id}${query}`
+
 
     return (
-        <a className='anchor-manifest-viewer text-reset text-decoration-none' href={href}>
-            <div>
-                <ArticleCard />
-            </div>
-        </a>
+        <ArticleCard />
     )
 }
 
