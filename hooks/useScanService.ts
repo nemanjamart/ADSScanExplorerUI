@@ -31,7 +31,7 @@ function useScanService<T>(url, queries) {
 
     const { data: authData, error: authError } = useBootstrap()
     const { addMessage, removeAlert } = useError();
-    const queryStr = Object.entries(queries).map(([key, value]) => `${key}=${value}`).join('&')
+    const queryStr = Object.entries(queries).map(([key, value]) => encodeURIComponent(`${key}`) + '=' + encodeURIComponent(`${value}`)).join('&')
     const key = `${url}?${queryStr}`
 
     const { data, error } = useSWR<T>(!authError && authData?.access_token
