@@ -38,7 +38,7 @@ const Search: NextPage = () => {
                 <div className={styles.searchBoxContainer}>
                     <SearchBox />
                     <Container className={styles.searchResultCount}>
-                        <p>Your search returned <b>{itemCount}</b> results</p>
+                        <p>Your search returned <b>{itemCount}</b> {tab}{itemCount != 1 ? 's' : ''}</p>
                     </Container>
                 </div>
                 <Container>
@@ -95,6 +95,8 @@ const SearchResultTab = ({ onSearchComplete }: TabProps) => {
     useEffect(() => {
         if (data) {
             onSearchComplete(data.total)
+        } else {
+            onSearchComplete(0)
         }
     }, [onSearchComplete, data])
 
