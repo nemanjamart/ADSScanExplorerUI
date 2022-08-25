@@ -120,7 +120,7 @@ const SearchTermsDropdown = ({ onClick }: SearchTermsDropdownProps) => {
         <TermDropdownItem term={"bibstem"} description={"Find papers published in a particular publication."} syntax={"bibstem:abbrev"} example={"bibstem:ApJ"} onClick={onClick} />
         <TermDropdownItem term={"full"} description={"Search for records containing the given text."} syntax={"full:phrase"} example={"full:\"Infrared\""} onClick={onClick} />
         <TermDropdownItem term={"page"} description={"Search for papers with a given page number in an article."} syntax={"page:number"} example={"page:32"} onClick={onClick} />
-        <TermDropdownItem term={"page_collection"} description={"Search for papers with a given page number in a collection (e.g. journal)."} syntax={"page_collection:number"} example={"page_collection:32"} onClick={onClick} />
+        <TermDropdownItem term={"page_sequence"} description={"Search for papers with a given page number in a collection (e.g. journal)."} syntax={"page_sequence:number"} example={"page_sequence:32"} onClick={onClick} />
         <TermDropdownItem term={"pagecolor"} description={"Search for pages with a given color. Available colors are BW, Greyscale and Color."} syntax={"pagecolor:color"} example={"pagecolor:Greyscale"} onClick={onClick} />
         <TermDropdownItem term={"pagetype"} description={"Find a specific type of record. Available options are Normal, Frontmatter, Backmatter, Insert and Plate."} syntax={"pagetype:type"} example={"pagetype:Plate"} onClick={onClick} />
         <TermDropdownItem term={"project"} description={"Find records belonging to a given project."} syntax={"project:name"} example={"project:PHaEDRA"} onClick={onClick} />
