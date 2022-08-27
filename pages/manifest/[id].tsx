@@ -5,6 +5,9 @@ import styles from '../../styles/Manifest.module.css'
 import Mirador from '../../components/Mirador/Mirador';
 import useBootstrap from '../../hooks/useBootstrap';
 import Container from 'react-bootstrap/Container'
+import useScanService from '../../hooks/useScanService';
+import CollectionType from '../../types/collection';
+
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -17,9 +20,14 @@ interface ManifestProps {
 
 /**
  * Page that visualizes the IIIF manifest using the Mirador component.
- */    
+ */
 const Manifest: NextPage<ManifestProps> = ({ id, page, textQuery, isArticle = false }: ManifestProps) => {
     const { data: authData } = useBootstrap()
+    const { data, isLoading, isError } = useScanService<CollectionType>(isArticle ? `${publicRuntimeConfig.metadataServiceUrl}/article/${id}/collection` : '', {})
+
+    if (!authData || !authData.access_token) {
+        return (<Layout><></></Layout>)
+    }
 
     const config = {
         id: 'ads_mirador_viewer',
@@ -67,6 +75,16 @@ const Manifest: NextPage<ManifestProps> = ({ id, page, textQuery, isArticle = fa
         },
         workspaceControlPanel: {
             enabled: false,
+        },
+        miradorAdsPlugins: {
+            id: id,
+            isArticle: isArticle,
+            collectionId: data ? data.id : id,
+            pageInCollection: data ? data.selected_page : 0,
+            authToken: authData.access_token,
+            manifestBaseUrl: `${publicRuntimeConfig.manifestServiceUrl}`,
+            pdfUrl: `${publicRuntimeConfig.serviceUrl}/image/pdf`,
+            ocrUrl: `${publicRuntimeConfig.metadataServiceUrl}/page/ocr`
         },
     }
 

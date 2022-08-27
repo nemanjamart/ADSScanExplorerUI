@@ -34,7 +34,7 @@ function useScanService<T>(url, queries) {
     const queryStr = Object.entries(queries).map(([key, value]) => encodeURIComponent(`${key}`) + '=' + encodeURIComponent(`${value}`)).join('&')
     const key = `${url}?${queryStr}`
 
-    const { data, error } = useSWR<T>(!authError && authData?.access_token
+    const { data, error } = useSWR<T>(!authError && authData?.access_token && url
         ? [key, { Authorization: `${authData.token_type} ${authData.access_token}` }]
         : null, fetchGeneric)
 

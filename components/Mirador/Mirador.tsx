@@ -14,7 +14,12 @@ const Mirador = ({ config }: MiradorProps) => {
         const initializeMirador = async () => {
             const mirador = (await import("mirador/dist/es/src/index")).default;
             const imageToolsPlugin = (await import("mirador-image-tools")).miradorImageToolsPlugin;
-            const miradorInstance = mirador.viewer(config, [...imageToolsPlugin]);
+            const downloadPlugin = (await import("mirador-ads-plugin")).miradorDownloadPlugin;
+            const downloadDialogPlugin = (await import("mirador-ads-plugin")).miradorDownloadDialogPlugin;
+            const nextManifestPlugin = (await import("mirador-ads-plugin")).miradorNextManifestPlugin;
+            const closeButtonPlugin = (await import("mirador-ads-plugin")).miradorCloseButtonPlugin;
+            const fetchOcrPlugin = (await import("mirador-ads-plugin")).miradorFetchOcrPlugin;
+            const miradorInstance = mirador.viewer(config, [imageToolsPlugin, downloadPlugin, downloadDialogPlugin, nextManifestPlugin, closeButtonPlugin, fetchOcrPlugin]);
     
             // Example of subscribing to state
             // miradorInstance.store.subscribe(() => {

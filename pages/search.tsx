@@ -23,14 +23,18 @@ const { publicRuntimeConfig } = getConfig()
  * Page that performs a search based on query parameters and renders the result.
  */    
 const Search: NextPage = () => {
-    const router = useRouter()
-    const { t: tab = "article" } = router.query
+    const {query, asPath, basePath} = useRouter()
+    const { t: tab = "article" } = query
 
     const [itemCount, setItemCount] = useState<number>(0)
 
     const onSearchComplete = (itemCount: number) => {
         setItemCount(itemCount)
     }
+
+    useEffect(function() {
+        localStorage.setItem('last_search_path', `${basePath}${asPath}`)
+    },[asPath]);
 
     return (
         <Layout>
@@ -44,17 +48,17 @@ const Search: NextPage = () => {
                 <Container>
                     <Nav variant="tabs" activeKey={String(tab)}>
                         <Nav.Item>
-                            <Link href={{ pathname: '/search', query: { ...router.query, t: 'article' } }} passHref>
+                            <Link href={{ pathname: '/search', query: { ...query, t: 'article' } }} passHref>
                                 <Nav.Link eventKey="article">Articles</Nav.Link>
                             </Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Link href={{ pathname: '/search', query: { ...router.query, t: 'collection' } }} passHref>
+                            <Link href={{ pathname: '/search', query: { ...query, t: 'collection' } }} passHref>
                                 <Nav.Link eventKey="collection">Collections</Nav.Link>
                             </Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Link href={{ pathname: '/search', query: { ...router.query, t: 'page' } }} passHref>
+                            <Link href={{ pathname: '/search', query: { ...query, t: 'page' } }} passHref>
                                 <Nav.Link eventKey="page">Pages</Nav.Link>
                             </Link>
                         </Nav.Item>
