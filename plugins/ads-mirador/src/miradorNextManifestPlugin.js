@@ -1,11 +1,10 @@
-import { setNextCanvas, setPreviousCanvas, updateWindow} from 'mirador/dist/es/src/state/actions';
+import { setNextCanvas, setPreviousCanvas, updateWindow } from 'mirador/dist/es/src/state/actions';
 import { getNextCanvasGrouping, getPreviousCanvasGrouping, getCanvasIndex } from 'mirador/dist/es/src/state/selectors'
-
+import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 import ChevronLeftOutlined from '@material-ui/icons/ChevronLeftOutlined';
 import ChevronRightOutlined from '@material-ui/icons/ChevronRightOutlined';
 import LibraryBooksOutlined from '@material-ui/icons/LibraryBooksOutlined';
 import { Component } from 'react';
-import { MenuItem, MenuList } from '@material-ui/core';
 
 class MyPluginComponent extends Component {
 
@@ -30,7 +29,7 @@ class MyPluginComponent extends Component {
     }
 
     openCollection() {
-        const {getCanvasIndex, pageInCollection, updateWindow, manifestBaseUrl, collectionId, setIsArticle } = this.props;
+        const { getCanvasIndex, pageInCollection, updateWindow, manifestBaseUrl, collectionId, setIsArticle } = this.props;
         if (!manifestBaseUrl || !collectionId) {
             return;
         }
@@ -49,15 +48,15 @@ class MyPluginComponent extends Component {
         const { isArticle } = this.props;
         return (
             <React.Fragment>
-                <MenuItem onClick={() => this.prevCanvas()} disabled={!this.hasPrevCanvas()}>
+                <MiradorMenuButton onClick={() => this.prevCanvas()} disabled={!this.hasPrevCanvas()} aria-label='Previous page'>
                     <ChevronLeftOutlined />
-                </MenuItem>
-                <MenuItem onClick={() => this.nextCanvas()} disabled={!this.hasNextCanvas()}>
+                </MiradorMenuButton>
+                <MiradorMenuButton onClick={() => this.nextCanvas()} disabled={!this.hasNextCanvas()} aria-label='Next page'>
                     <ChevronRightOutlined />
-                </MenuItem>
-                {isArticle ? <MenuItem onClick={() => this.openCollection()} >
+                </MiradorMenuButton>
+                {isArticle ? <MiradorMenuButton onClick={() => this.openCollection()} aria-label='Open in collection'>
                     <LibraryBooksOutlined />
-                </MenuItem> : ''}
+                </MiradorMenuButton> : ''}
             </React.Fragment >
         );
     }
@@ -71,7 +70,7 @@ const miradorNextManifestPlugin = {
     mapDispatchToProps: (dispatch, { windowId }) => ({
         setNextCanvas: () => dispatch(setNextCanvas(windowId)),
         setPreviousCanvas: () => dispatch(setPreviousCanvas(windowId)),
-        updateWindow: (manifestUrl, page) => dispatch(updateWindow(windowId, { manifestId: manifestUrl, canvasIndex: page-1 }))
+        updateWindow: (manifestUrl, page) => dispatch(updateWindow(windowId, { manifestId: manifestUrl, canvasIndex: page - 1 }))
     }),
 
     mapStateToProps: (state, { windowId }) => ({
@@ -86,14 +85,14 @@ const miradorNextManifestPlugin = {
 
         },
         hasPrevCanvas: () => {
-            return !!getPreviousCanvasGrouping(state, {windowId: windowId});
+            return !!getPreviousCanvasGrouping(state, { windowId: windowId });
 
         },
         setIsArticle: (isArticle) => {
             state.config.miradorAdsPlugins.isArticle = isArticle;
         },
         getCanvasIndex: () => {
-            return getCanvasIndex(state, {windowId: windowId})
+            return getCanvasIndex(state, { windowId: windowId })
         }
     })
 }

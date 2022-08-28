@@ -3,7 +3,7 @@ import CloseOutlined from '@material-ui/icons/CloseOutlined';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 import { Component } from 'react';
-import { MenuItem, MenuList } from '@material-ui/core';
+import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 
 class MyPluginComponent extends Component {
     constructor(props) {
@@ -25,12 +25,12 @@ class MyPluginComponent extends Component {
     render() {
         return (
             <React.Fragment>
-                <MenuItem onClick={() => this.toggleFullscreen()}>
+                <MiradorMenuButton onClick={() => this.toggleFullscreen()} aria-label='Toggle fullscreen'>
                     {this.state.fullscreen ? <FullscreenExitIcon/> : <FullscreenIcon />}
-                </MenuItem>
-                <MenuItem onClick={() => this.closeMirador()}>
+                </MiradorMenuButton>
+                <MiradorMenuButton onClick={() => this.closeMirador()} aria-label='Close Mirador'>
                     <CloseOutlined />
-                </MenuItem>
+                </MiradorMenuButton>
             </React.Fragment >
         );
     }
