@@ -18,7 +18,7 @@ import Link from 'next/link';
 import MultiCardLoader from '../components/ContentLoader/MultiCardLoader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortAmountAsc, faSortAmountDesc } from '@fortawesome/free-solid-svg-icons';
-import { Button, ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Button, ButtonGroup, Dropdown, DropdownButton, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -82,15 +82,28 @@ const Search: NextPage = () => {
                                 <Nav.Link eventKey="page">Pages</Nav.Link>
                             </Link>
                         </Nav.Item>
+
                         <ButtonGroup className={styles.sortButton}>
-                            <Button onClick={() => onToggleSortOrder()}>
-                                <FontAwesomeIcon icon={order == 'desc' ? faSortAmountAsc : faSortAmountDesc} size="lg" />
-                            </Button>
-                            <DropdownButton title={sortType}>
-                                <Dropdown.Item onClick={() => onSortChanged('bibcode')}>bibcode</Dropdown.Item>
-                                <Dropdown.Item onClick={() => onSortChanged('relevance')}>relevance</Dropdown.Item>
-                                <Dropdown.Item onClick={() => onSortChanged('collection')}>collection</Dropdown.Item>
-                            </DropdownButton>
+                            <OverlayTrigger
+                                placement="left"
+                                delay={{ show: 250, hide: 400 }}
+                                overlay={<Tooltip>Change sort direction to {order == 'desc' ? 'ascending' : 'descending'}</Tooltip>}
+                            >
+                                <Button onClick={() => onToggleSortOrder()}>
+                                    <FontAwesomeIcon icon={order == 'desc' ? faSortAmountAsc : faSortAmountDesc} size="lg" />
+                                </Button>
+                            </OverlayTrigger>
+                            <OverlayTrigger
+                                placement="right"
+                                delay={{ show: 250, hide: 400 }}
+                                overlay={<Tooltip>Select a sort option</Tooltip>}
+                            >
+                                <DropdownButton title={sortType}>
+                                    <Dropdown.Item onClick={() => onSortChanged('bibcode')}>bibcode</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => onSortChanged('relevance')}>relevance</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => onSortChanged('collection')}>collection</Dropdown.Item>
+                                </DropdownButton>
+                            </OverlayTrigger>
                         </ButtonGroup>
 
                     </Nav>
@@ -110,7 +123,7 @@ interface TabProps {
 
 const SearchResultTab = ({ onSearchComplete }: TabProps) => {
     const router = useRouter()
-    const { q, page, limit, t: tab = 'article', sort = 'bibcode', order = 'asc'  } = router.query
+    const { q, page, limit, t: tab = 'article', sort = 'bibcode', order = 'asc' } = router.query
 
     const searchUrl = `${publicRuntimeConfig.metadataServiceUrl}/${tab}/search`
     const searchQueries = { q: q, page: page, limit: limit, sort: `${sort}_${order}` }
