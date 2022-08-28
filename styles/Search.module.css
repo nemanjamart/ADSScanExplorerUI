@@ -28,3 +28,13 @@
   border: 1px solid #D8D8D8;
   margin-bottom: 50px;
 }
+
+.sortButton {
+  margin-left: auto !important;
+  align-self: flex-end;
+  margin-bottom: 5px;
+}
+
+.sortButton > * {
+  margin-left: 5px;
+}

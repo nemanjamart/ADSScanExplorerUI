@@ -16,25 +16,45 @@ import Nav from 'react-bootstrap/Nav'
 import getConfig from 'next/config'
 import Link from 'next/link';
 import MultiCardLoader from '../components/ContentLoader/MultiCardLoader';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSortAmountAsc, faSortAmountDesc } from '@fortawesome/free-solid-svg-icons';
+import { Button, ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap';
 
 const { publicRuntimeConfig } = getConfig()
 
 /**
  * Page that performs a search based on query parameters and renders the result.
- */    
+ */
 const Search: NextPage = () => {
-    const {query, asPath, basePath} = useRouter()
-    const { t: tab = "article" } = query
+    const router = useRouter()
+    const { query, asPath, basePath, } = router
+    const { t: tab = "article", page, limit, sort: sortType = 'bibcode', order = 'asc' } = query
 
     const [itemCount, setItemCount] = useState<number>(0)
+
+
+    const onSortChanged = (sort) => {
+        console.log(sort)
+        router.push({
+            pathname: '/search',
+            query: { ...router.query, page: page, limit: limit, sort: sort, order: order },
+        }, undefined, { shallow: true })
+    }
+
+    const onToggleSortOrder = () => {
+        router.push({
+            pathname: '/search',
+            query: { ...router.query, page: page, limit: limit, sort: sortType, order: order == 'asc' ? 'desc' : 'asc' },
+        }, undefined, { shallow: true })
+    }
 
     const onSearchComplete = (itemCount: number) => {
         setItemCount(itemCount)
     }
 
-    useEffect(function() {
+    useEffect(function () {
         localStorage.setItem('last_search_path', `${basePath}${asPath}`)
-    },[asPath]);
+    }, [asPath]);
 
     return (
         <Layout>
@@ -62,6 +82,17 @@ const Search: NextPage = () => {
                                 <Nav.Link eventKey="page">Pages</Nav.Link>
                             </Link>
                         </Nav.Item>
+                        <ButtonGroup className={styles.sortButton}>
+                            <Button onClick={() => onToggleSortOrder()}>
+                                <FontAwesomeIcon icon={order == 'desc' ? faSortAmountAsc : faSortAmountDesc} size="lg" />
+                            </Button>
+                            <DropdownButton title={sortType}>
+                                <Dropdown.Item onClick={() => onSortChanged('bibcode')}>bibcode</Dropdown.Item>
+                                <Dropdown.Item onClick={() => onSortChanged('relevance')}>relevance</Dropdown.Item>
+                                <Dropdown.Item onClick={() => onSortChanged('collection')}>collection</Dropdown.Item>
+                            </DropdownButton>
+                        </ButtonGroup>
+
                     </Nav>
                     <div className={styles.resultsContainer}>
                         <SearchResultTab onSearchComplete={onSearchComplete} />
@@ -79,10 +110,10 @@ interface TabProps {
 
 const SearchResultTab = ({ onSearchComplete }: TabProps) => {
     const router = useRouter()
-    const { q, page, limit, t: tab = 'article' } = router.query
+    const { q, page, limit, t: tab = 'article', sort = 'bibcode', order = 'asc'  } = router.query
 
     const searchUrl = `${publicRuntimeConfig.metadataServiceUrl}/${tab}/search`
-    const searchQueries = { q: q, page: page, limit: limit }
+    const searchQueries = { q: q, page: page, limit: limit, sort: `${sort}_${order}` }
     const { data, isLoading, isError } = useScanService<SearchResultType>(searchUrl, searchQueries)
 
     const onPaginationChanged = (page: number, limit: number) => {
