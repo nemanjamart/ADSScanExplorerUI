@@ -22,6 +22,6 @@
   }
   
   .thumbnail {
-    object-fit: cover;
+    object-fit: contain;
     object-position: 50% 0%;
   }
