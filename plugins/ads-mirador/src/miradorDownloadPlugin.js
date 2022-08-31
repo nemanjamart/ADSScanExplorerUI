@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import MenuItem from '@material-ui/core/MenuItem';
 import DownloadIcon from '@material-ui/icons/VerticalAlignBottomSharp';
+import { MiradorMenuButton } from 'mirador/dist/es/src/components/MiradorMenuButton';
 
 const downloadDialogReducer = (state = {}, action) => {
   if (action.type === 'OPEN_WINDOW_DIALOG') {
@@ -41,14 +39,9 @@ class MiradorDownload extends Component {
   render() {
     return (
       <React.Fragment>
-        <MenuItem onClick={() => this.openDialogAndCloseMenu()}>
-          <ListItemIcon>
-            <DownloadIcon />
-          </ListItemIcon>
-          <ListItemText primaryTypographyProps={{ variant: 'body1' }}>
-            Download pages
-          </ListItemText>
-        </MenuItem>
+        <MiradorMenuButton onClick={() => this.openDialogAndCloseMenu()} aria-label="Download pages">
+          <DownloadIcon />
+        </MiradorMenuButton>
       </React.Fragment>
     );
   }
@@ -60,12 +53,12 @@ MiradorDownload.propTypes = {
 };
 
 MiradorDownload.defaultProps = {
-  handleClose: () => {},
-  openDownloadDialog: () => {},
+  handleClose: () => { },
+  openDownloadDialog: () => { },
 };
 
 export default {
-  target: 'WindowTopBarPluginMenu',
+  target: 'WindowTopBarPluginArea',
   mode: 'add',
   name: 'MiradorDownloadPlugin',
   component: MiradorDownload,
