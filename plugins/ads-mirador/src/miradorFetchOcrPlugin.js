@@ -63,7 +63,8 @@ export default {
     getCanvasIndex: () => {
       return getCanvasIndex(state, { windowId: windowId })
     },
-    title: getManifestTitle(state, { windowId })
+    title: getManifestTitle(state, { windowId }),
+    authToken: state.config.miradorAdsPlugins && state.config.miradorAdsPlugins.authToken
   }),
   mapDispatchToProps: (dispatch, { windowId }) => ({
     addError: (error) => dispatch(addError(error)),
