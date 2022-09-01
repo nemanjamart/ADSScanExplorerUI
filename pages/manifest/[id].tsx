@@ -7,6 +7,7 @@ import useBootstrap from '../../hooks/useBootstrap';
 import Container from 'react-bootstrap/Container'
 import useScanService from '../../hooks/useScanService';
 import CollectionType from '../../types/collection';
+import useAlert from '../../hooks/useAlert';
 
 
 const { publicRuntimeConfig } = getConfig()
@@ -24,6 +25,7 @@ interface ManifestProps {
 const Manifest: NextPage<ManifestProps> = ({ id, page, textQuery, isArticle = false }: ManifestProps) => {
     const { data: authData } = useBootstrap()
     const { data, isLoading, isError } = useScanService<CollectionType>(isArticle ? `${publicRuntimeConfig.metadataServiceUrl}/article/${id}/collection` : '', {})
+    const { addMessage } = useAlert();
 
     if (!authData || !authData.access_token) {
         return (<Layout><></></Layout>)
@@ -84,7 +86,8 @@ const Manifest: NextPage<ManifestProps> = ({ id, page, textQuery, isArticle = fa
             authToken: authData.access_token,
             manifestBaseUrl: `${publicRuntimeConfig.manifestServiceUrl}`,
             pdfUrl: `${publicRuntimeConfig.serviceUrl}/image/pdf`,
-            ocrUrl: `${publicRuntimeConfig.metadataServiceUrl}/page/ocr`
+            ocrUrl: `${publicRuntimeConfig.metadataServiceUrl}/page/ocr`,
+            addExternalAlert: (msg) => addMessage(msg)
         },
     }
 

@@ -15,6 +15,7 @@ import Radio from '@material-ui/core/Radio'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import { getCanvasLabel, getVisibleCanvases, selectInfoResponse } from 'mirador/dist/es/src/state/selectors/canvases';
+import { addError } from 'mirador/dist/es/src/state/actions'
 import { getManifestTitle } from 'mirador/dist/es/src/state/selectors'
 import { getWindowViewType } from 'mirador/dist/es/src/state/selectors/windows';
 import { getManifestoInstance } from 'mirador/dist/es/src/state/selectors/manifests';
@@ -38,7 +39,7 @@ export class MiradorDownloadDialog extends Component {
 
 
     fetchPDF(usePageRange) {
-        const { authToken, pdfUrl, title, addError } = this.props;
+        const { authToken, pdfUrl, title, addError, closeDialog, addExternalAlert } = this.props;
         const requestOptions = {
             method: 'GET',
             headers: { 'Authorization': `Bearer ${authToken}` },
@@ -53,11 +54,14 @@ export class MiradorDownloadDialog extends Component {
             if (!res.ok) {
                 addError("Sorry, an error occured while generating the PDF")
             } else {
+                addExternalAlert("Please wait while your PDF is being generated. Depending on the file size it might take up to 30 seconds.")
                 res.blob().then((blob) => {
                     saveAs(blob, `${title}_scan_explorer.pdf`)
                 })
             }
         })
+
+        closeDialog()
     }
 
     /**
@@ -193,7 +197,8 @@ const mapStateToProps = (state, { windowId }) => ({
     id: state.config.miradorAdsPlugins && state.config.miradorAdsPlugins.id,
     open: (state && state.windowDialogs && state.windowDialogs[windowId] && state.windowDialogs[windowId].openDialog === 'download'),
     viewType: getWindowViewType(state, { windowId }),
-    title: getManifestTitle(state, { windowId })
+    title: getManifestTitle(state, { windowId }),
+    addExternalAlert: (msg) => state.config.miradorAdsPlugins && state.config.miradorAdsPlugins.addExternalAlert(msg),
 });
 
 

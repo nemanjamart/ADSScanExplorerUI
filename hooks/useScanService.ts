@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import useSWR from "swr"
 import useBootstrap from "./useBootstrap"
-import useError from "./useAlert";
+import useAlert from "./useAlert";
 import ServiceError from "../types/serviceError";
 
 const fetchGeneric = <T>(url, headers) => fetch(url, { headers: headers }).then(resp => Promise.all([resp, resp.json()])).then(([resp, data]) => {
@@ -30,7 +30,7 @@ const fetchGeneric = <T>(url, headers) => fetch(url, { headers: headers }).then(
 function useScanService<T>(url, queries) {
 
     const { data: authData, error: authError } = useBootstrap()
-    const { addMessage, removeAlert } = useError();
+    const { addMessage, removeAlert } = useAlert();
     const queryStr = Object.entries(queries).map(([key, value]) => encodeURIComponent(`${key}`) + '=' + encodeURIComponent(`${value}`)).join('&')
     const key = `${url}?${queryStr}`
 
