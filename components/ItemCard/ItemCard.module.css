@@ -3,7 +3,6 @@
     color: inherit;
     border: 1px solid #eaeaea;
     transition: color 0.15s ease, border-color 0.15s ease;
-  
     background-color: #e6e6e6;
     width: 20rem;
   }
@@ -22,6 +21,6 @@
   }
   
   .thumbnail {
-    object-fit: contain;
+    object-fit: fill;
     object-position: 50% 0%;
   }

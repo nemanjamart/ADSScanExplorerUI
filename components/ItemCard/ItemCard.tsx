@@ -28,7 +28,7 @@ const ItemCard = ({ title, text, thumbnail, subtitle, footer, showPlaceholder = 
 
     const placeholder = () => {
         return <>
-            <Card.Img as={ImageLoader} width={400} height={200} />
+            <Card.Img as={ImageLoader} width={300} height={300} />
             <Card.Body onClick={(e) => {e.stopPropagation()}}>
                 <Placeholder as={Card.Title} animation="glow">
                     <Placeholder xs={6} />
@@ -43,7 +43,7 @@ const ItemCard = ({ title, text, thumbnail, subtitle, footer, showPlaceholder = 
 
     const partial = () => {
         return <>
-            <Card.Img className={styles.thumbnail} variant="top" src={thumbnail} alt="Thumbnail" width={400} height={200} as={ProtectedImage} />
+            <Card.Img className={styles.thumbnail} variant="top" src={thumbnail} alt="Thumbnail" width={300} height={300} as={ProtectedImage} />
             <Card.Body onClick={(e) => {e.stopPropagation()}}>
                 <Placeholder as={Card.Title} animation="glow">
                     <Placeholder xs={6} />
@@ -59,7 +59,7 @@ const ItemCard = ({ title, text, thumbnail, subtitle, footer, showPlaceholder = 
 
     const card = () => {
         return <>
-            <Card.Img className={styles.thumbnail} variant="top" src={thumbnail} alt="Thumbnail" width={400} height={200} as={ProtectedImage} />
+            <Card.Img className={styles.thumbnail} variant="top" src={thumbnail} alt="Thumbnail" width={300} height={300} as={ProtectedImage} />
             <Card.Body onClick={(e) => {e.stopPropagation()}}>
                 <OverlayTrigger placement='auto' overlay={<Tooltip>{title}</Tooltip>}>
                     <Card.Title className='text-truncate'>{title}</Card.Title>
