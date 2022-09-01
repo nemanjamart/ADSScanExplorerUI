@@ -64,6 +64,28 @@ export class MiradorDownloadDialog extends Component {
         closeDialog()
     }
 
+
+
+    validateForm(e) {
+        e.preventDefault();
+
+        let error = ''
+        if (this.state.startPage > this.state.endPage) {
+            error = 'The final page number must be greater or equal that of the start page.'
+        } else if (this.state.startPage < 1) {
+            error = 'Start page must be greater than 0.'
+        } else if ((this.state.endPage - this.state.startPage) > 100) {
+            error = 'Sorry, downloading more than 100 pages at a time is not allowed.'
+        } else {
+            this.fetchPDF(this.state.usePageRange);
+        }
+
+        if (error !== '') {
+            this.setState({ formError: true, errorText: error })
+
+        }
+    }
+
     /**
      * Returns the rendered component
     */
@@ -97,7 +119,7 @@ export class MiradorDownloadDialog extends Component {
                             autoComplete="off"
                         >
                             <FormControl >
-                                <form onSubmit={(e) => { e.preventDefault(); this.fetchPDF(this.state.usePageRange); }}>
+                                <form onSubmit={(e) => this.validateForm(e)} >
                                     <FormLabel id="row-radio-buttons-group-label">Download pages</FormLabel>
                                     <RadioGroup
                                         row
@@ -110,34 +132,30 @@ export class MiradorDownloadDialog extends Component {
                                         <FormControlLabel value={true} control={<Radio />} label="Range" />
                                     </RadioGroup>
 
-                                    <Grid container>
-                                        <Grid item xs={4}>
-                                            <TextField
-                                                type={'number'}
-                                                required
-                                                inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                                                id="outlined-required"
-                                                label="Page start"
-                                                defaultValue={this.state.startPage}
-                                                style={{ width: '80%' }}
-                                                disabled={!this.state.usePageRange}
-                                                onChange={(e) => this.setState({ startPage: e.target.value })}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                            <TextField
-                                                type={'number'}
-                                                required
-                                                inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                                                id="outlined-disabled"
-                                                label="Page end"
-                                                defaultValue={this.state.endPage}
-                                                style={{ width: '80%' }}
-                                                disabled={!this.state.usePageRange}
-                                                onChange={(e) => this.setState({ endPage: e.target.value })}
-                                            />
-                                        </Grid>
-                                    </Grid>
+                                    <TextField
+                                        required
+                                        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                                        id="outlined-required"
+                                        label="Page start"
+                                        defaultValue={this.state.startPage}
+                                        style={{ width: '80%' }}
+                                        disabled={!this.state.usePageRange}
+                                        error={this.state.formError}
+                                        onChange={(e) => this.setState({ startPage: e.target.value })}
+                                    />
+
+                                    <TextField
+                                        required
+                                        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                                        id="outlined-disabled"
+                                        label="Page end"
+                                        defaultValue={this.state.endPage}
+                                        style={{ width: '80%' }}
+                                        disabled={!this.state.usePageRange}
+                                        onChange={(e) => this.setState({ endPage: e.target.value })}
+                                        error={this.state.formError}
+                                        helperText={this.state.errorText}
+                                    />
                                     <Button type='submit' variant="contained" style={{ margin: '20px' }} >Download Pages</Button>
                                 </form>
                             </FormControl>
