@@ -18,7 +18,7 @@ class MyPluginComponent extends Component {
     }
 
     closeMirador() {
-        history.replaceState({}, '', localStorage.getItem('last_search_path'))
+        history.replaceState({}, '', sessionStorage.getItem('last_search_path'))
         history.go()
     }
 
@@ -28,9 +28,9 @@ class MyPluginComponent extends Component {
                 <MiradorMenuButton onClick={() => this.toggleFullscreen()} aria-label='Toggle fullscreen'>
                     {this.state.fullscreen ? <FullscreenExitIcon/> : <FullscreenIcon />}
                 </MiradorMenuButton>
-                <MiradorMenuButton onClick={() => this.closeMirador()} aria-label='Close Mirador'>
+                {sessionStorage.getItem('last_search_path') ? <MiradorMenuButton onClick={() => this.closeMirador()} aria-label='Close Mirador'>
                     <CloseOutlined />
-                </MiradorMenuButton>
+                </MiradorMenuButton> : ''}
             </React.Fragment >
         );
     }

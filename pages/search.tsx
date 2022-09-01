@@ -53,7 +53,7 @@ const Search: NextPage = () => {
     }
 
     useEffect(function () {
-        localStorage.setItem('last_search_path', `${basePath}${asPath}`)
+        sessionStorage.setItem('last_search_path', `${basePath}${asPath}`)
     }, [asPath]);
 
     return (
