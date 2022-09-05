@@ -7,7 +7,7 @@ import Router from 'next/router';
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import App from 'next/app'
-import ErrorProvider from '../providers/AlertProvider'
+import AlertProvider from '../providers/AlertProvider'
 import '../styles/bootstrap.scss'
 import { SSRProvider } from 'react-bootstrap';
 
@@ -29,9 +29,9 @@ Router.events.on('routeChangeError', () => NProgress.done());
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SSRProvider >
-      <ErrorProvider>
+      <AlertProvider>
         <Component {...pageProps} />
-      </ErrorProvider>
+      </AlertProvider>
     </SSRProvider>
   )
 }

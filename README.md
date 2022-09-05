@@ -15,6 +15,18 @@ docker compose -f docker/docker-compose.yaml -f docker/{environment}.yaml up -d
 
 ## Tests
 
+### Unit tests
+
+Run unit tests
+```
+npm run test
+```
+
+Run unit test & get coverage report
+```
+npm run test:coverage
+```
+
 ### End-to-end tests
 
 Build and start the application

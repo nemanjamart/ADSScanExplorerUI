@@ -34,7 +34,6 @@ const Search: NextPage = () => {
 
 
     const onSortChanged = (sort) => {
-        console.log(sort)
         router.push({
             pathname: '/search',
             query: { ...router.query, page: page, limit: limit, sort: sort, order: order },
@@ -89,7 +88,7 @@ const Search: NextPage = () => {
                                 delay={{ show: 250, hide: 400 }}
                                 overlay={<Tooltip>Change sort direction to {order == 'desc' ? 'ascending' : 'descending'}</Tooltip>}
                             >
-                                <Button onClick={() => onToggleSortOrder()}>
+                                <Button onClick={() => onToggleSortOrder()} aria-label="sort order">
                                     <FontAwesomeIcon icon={order == 'desc' ? faSortAmountAsc : faSortAmountDesc} size="lg" />
                                 </Button>
                             </OverlayTrigger>
@@ -98,10 +97,10 @@ const Search: NextPage = () => {
                                 delay={{ show: 250, hide: 400 }}
                                 overlay={<Tooltip>Select a sort option</Tooltip>}
                             >
-                                <DropdownButton title={sortType}>
-                                    <Dropdown.Item onClick={() => onSortChanged('bibcode')}>bibcode</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => onSortChanged('relevance')}>relevance</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => onSortChanged('collection')}>collection</Dropdown.Item>
+                                <DropdownButton title={sortType} aria-label="sort option">
+                                    <Dropdown.Item onClick={() => onSortChanged('bibcode')} aria-label="bibcode">bibcode</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => onSortChanged('relevance')} aria-label="relevance">relevance</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => onSortChanged('collection')} aria-label="collection">collection</Dropdown.Item>
                                 </DropdownButton>
                             </OverlayTrigger>
                         </ButtonGroup>

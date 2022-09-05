@@ -15,7 +15,7 @@ const SearchExample = ({ onExampleSelected }: SearchExampleProps) => {
     return (
         <Card id={styles.container}>
             <Card.Header>Search examples</Card.Header>
-            <ListGroup variant="flush">
+            <ListGroup id='search-example-lg' variant="flush">
                 <ExampleListItem onExampleSelected={onExampleSelected} title={"Publication"} example={"bibstem:ApJ"} />
                 <ExampleListItem onExampleSelected={onExampleSelected} title={"Volume"} example={"bibstem:ApJ volume:333"} />
                 <ExampleListItem onExampleSelected={onExampleSelected} title={"Article"} example={"bibcode:1988ApJ...333L..69M"} />
