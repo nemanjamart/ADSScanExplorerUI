@@ -22,8 +22,7 @@ import { getManifestoInstance } from 'mirador/dist/es/src/state/selectors/manife
 import { getContainerId } from 'mirador/dist/es/src/state/selectors/config';
 import ScrollIndicatedDialogContent from 'mirador/dist/es/src/containers/ScrollIndicatedDialogContent';
 import { getCanvasGroupings } from 'mirador/dist/es/src/state/selectors'
-import { saveAs } from 'file-saver'
-
+import streamSaver from 'streamsaver'
 
 /**
  * MiradorDownloadDialog ~
@@ -51,14 +50,22 @@ export class MiradorDownloadDialog extends Component {
             url += `&page_start=${this.state.startPage}&page_end=${this.state.endPage}`
         }
 
+        const fileStream = streamSaver.createWriteStream(`${title}_scan_explorer.pdf`)
         fetch(url, requestOptions).then(res => {
             if (!res.ok) {
                 addError("Sorry, an error occured while generating the PDF")
             } else {
                 addExternalAlert("Please wait while your PDF is being generated. Depending on the file size it might take up to 30 seconds.")
-                res.blob().then((blob) => {
-                    saveAs(blob, `${title}_scan_explorer.pdf`)
-                })
+                const readableStream = res.body
+
+                window.writer = fileStream.getWriter()
+                const reader = readableStream.getReader()
+                const pump = () => reader.read()
+                    .then(res => res.done
+                        ? writer.close()
+                        : writer.write(res.value).then(pump))
+                
+                pump()
             }
         })
 
@@ -80,7 +87,7 @@ export class MiradorDownloadDialog extends Component {
                 error = 'Start page must be greater than 0.'
             } else if ((this.state.endPage - this.state.startPage) > 100) {
                 error = 'Sorry, downloading more than 100 pages at a time is not allowed.'
-            } 
+            }
         } else {
             if (totalPages > 100) {
                 error = 'Sorry, downloading more than 100 pages at a time is not allowed.'
