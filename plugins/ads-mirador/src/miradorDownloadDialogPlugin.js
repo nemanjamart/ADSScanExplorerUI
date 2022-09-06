@@ -21,6 +21,7 @@ import { getWindowViewType } from 'mirador/dist/es/src/state/selectors/windows';
 import { getManifestoInstance } from 'mirador/dist/es/src/state/selectors/manifests';
 import { getContainerId } from 'mirador/dist/es/src/state/selectors/config';
 import ScrollIndicatedDialogContent from 'mirador/dist/es/src/containers/ScrollIndicatedDialogContent';
+import { getCanvasGroupings } from 'mirador/dist/es/src/state/selectors'
 import { saveAs } from 'file-saver'
 
 
@@ -69,18 +70,26 @@ export class MiradorDownloadDialog extends Component {
     validateForm(e) {
         e.preventDefault();
 
+        const { totalPages } = this.props;
+
         let error = ''
-        if (this.state.startPage > this.state.endPage) {
-            error = 'The final page number must be greater or equal that of the start page.'
-        } else if (this.state.startPage < 1) {
-            error = 'Start page must be greater than 0.'
-        } else if ((this.state.endPage - this.state.startPage) > 100) {
-            error = 'Sorry, downloading more than 100 pages at a time is not allowed.'
+        if (this.state.usePageRange) {
+            if (this.state.startPage > this.state.endPage) {
+                error = 'The final page number must be greater or equal that of the start page.'
+            } else if (this.state.startPage < 1) {
+                error = 'Start page must be greater than 0.'
+            } else if ((this.state.endPage - this.state.startPage) > 100) {
+                error = 'Sorry, downloading more than 100 pages at a time is not allowed.'
+            } 
         } else {
-            this.fetchPDF(this.state.usePageRange);
+            if (totalPages > 100) {
+                error = 'Sorry, downloading more than 100 pages at a time is not allowed.'
+            }
         }
 
-        if (error !== '') {
+        if (error == '') {
+            this.fetchPDF(this.state.usePageRange);
+        } else {
             this.setState({ formError: true, errorText: error })
 
         }
@@ -217,6 +226,7 @@ const mapStateToProps = (state, { windowId }) => ({
     viewType: getWindowViewType(state, { windowId }),
     title: getManifestTitle(state, { windowId }),
     addExternalAlert: (msg) => state.config.miradorAdsPlugins && state.config.miradorAdsPlugins.addExternalAlert(msg),
+    totalPages: getCanvasGroupings(state, { windowId }).length
 });
 
 
