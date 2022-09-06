@@ -25,7 +25,7 @@ interface ManifestProps {
 const Manifest: NextPage<ManifestProps> = ({ id, page, textQuery, isArticle = false }: ManifestProps) => {
     const { data: authData } = useBootstrap()
     const { data, isLoading, isError } = useScanService<CollectionType>(isArticle ? `${publicRuntimeConfig.metadataServiceUrl}/article/${id}/collection` : '', {})
-    const { addMessage } = useAlert();
+    const { addMessage, removeAlert } = useAlert();
 
     if (!authData || !authData.access_token) {
         return (<Layout><></></Layout>)
@@ -87,7 +87,8 @@ const Manifest: NextPage<ManifestProps> = ({ id, page, textQuery, isArticle = fa
             manifestBaseUrl: `${publicRuntimeConfig.manifestServiceUrl}`,
             pdfUrl: `${publicRuntimeConfig.serviceUrl}/image/pdf`,
             ocrUrl: `${publicRuntimeConfig.metadataServiceUrl}/page/ocr`,
-            addExternalAlert: (msg) => addMessage(msg)
+            addExternalAlert: (msg) => addMessage(msg),
+            removeExternalAlert: () => removeAlert()
         },
     }
 

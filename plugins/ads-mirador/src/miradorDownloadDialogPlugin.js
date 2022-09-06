@@ -39,7 +39,7 @@ export class MiradorDownloadDialog extends Component {
 
 
     fetchPDF(usePageRange) {
-        const { authToken, pdfUrl, title, addError, closeDialog, addExternalAlert } = this.props;
+        const { authToken, pdfUrl, title, addError, closeDialog, addExternalAlert, removeExternalAlert } = this.props;
         const requestOptions = {
             method: 'GET',
             headers: { 'Authorization': `Bearer ${authToken}` },
@@ -55,14 +55,14 @@ export class MiradorDownloadDialog extends Component {
             if (!res.ok) {
                 addError("Sorry, an error occured while generating the PDF")
             } else {
-                addExternalAlert("Please wait while your PDF is being generated. Depending on the file size it might take up to 30 seconds.")
+                addExternalAlert("Please wait while your PDF is being generated. Depending on size and number of pages this might take a few minutes.")
                 const readableStream = res.body
 
                 window.writer = fileStream.getWriter()
                 const reader = readableStream.getReader()
                 const pump = () => reader.read()
                     .then(res => res.done
-                        ? writer.close()
+                        ? writer.close().then(removeExternalAlert)
                         : writer.write(res.value).then(pump))
                 
                 pump()
@@ -233,6 +233,7 @@ const mapStateToProps = (state, { windowId }) => ({
     viewType: getWindowViewType(state, { windowId }),
     title: getManifestTitle(state, { windowId }),
     addExternalAlert: (msg) => state.config.miradorAdsPlugins && state.config.miradorAdsPlugins.addExternalAlert(msg),
+    removeExternalAlert: () => state.config.miradorAdsPlugins && state.config.miradorAdsPlugins.addExternalAlert(),
     totalPages: getCanvasGroupings(state, { windowId }).length
 });
 
