@@ -61,6 +61,7 @@ export class MiradorDownloadDialog extends Component {
                     const blob = await res.blob()
                     const blobUrl = URL.createObjectURL(blob);
                     window.open(blobUrl)
+                    removeExternalAlert()
 
                 } else {
                     const readableStream = res.body
