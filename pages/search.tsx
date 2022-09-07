@@ -150,7 +150,12 @@ const SearchResultTab = ({ onSearchComplete }: TabProps) => {
 
     if (isError) return <p>Sorry something went wrong</p>
     if (isLoading) return <MultiCardLoader count={Number(limit)} />
-    if (data.total == 0) return <p>Sorry no results were found for <b>{q}</b></p>
+    if (data.total == 0) 
+        return <p className="text-center">
+                Sorry no {tab}s were found for <b>{q}</b> 
+                <br/><br/> 
+                {tab == 'article' ? 'Use the navigation menu to see if your query matched any collections or pages.' : ''}
+            </p>
     if (data.pageCount < Number(page)) onPaginationChanged(1, Number(limit))
 
 
