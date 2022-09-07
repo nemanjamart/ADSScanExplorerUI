@@ -50,22 +50,31 @@ export class MiradorDownloadDialog extends Component {
             url += `&page_start=${this.state.startPage}&page_end=${this.state.endPage}`
         }
 
+        addExternalAlert("Please wait while your PDF is being generated. Depending on size and number of pages this might take a few minutes.")
         const fileStream = streamSaver.createWriteStream(`${title}_scan_explorer.pdf`)
-        fetch(url, requestOptions).then(res => {
+        fetch(url, requestOptions).then(async res => {
             if (!res.ok) {
                 addError("Sorry, an error occured while generating the PDF")
             } else {
-                addExternalAlert("Please wait while your PDF is being generated. Depending on size and number of pages this might take a few minutes.")
-                const readableStream = res.body
+                // Workaround for issue with service worker on firefox & mobile
+                if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1 || /Mobi|Android/i.test(navigator.userAgent)) {
+                    const blob = await res.blob()
+                    const blobUrl = URL.createObjectURL(blob);
+                    window.open(blobUrl)
 
-                window.writer = fileStream.getWriter()
-                const reader = readableStream.getReader()
-                const pump = () => reader.read()
-                    .then(res => res.done
-                        ? writer.close().then(removeExternalAlert)
-                        : writer.write(res.value).then(pump))
-                
-                pump()
+                } else {
+                    const readableStream = res.body
+                    window.writer = fileStream.getWriter()
+                    const reader = readableStream.getReader()
+                    const pump = () => reader.read()
+                        .then(res => res.done
+                            ? writer.close().then(removeExternalAlert)
+                            : writer.write(res.value).then(pump))
+
+                    pump()
+                }
+
+
             }
         })
 
