@@ -150,12 +150,20 @@ const SearchResultTab = ({ onSearchComplete }: TabProps) => {
 
     if (isError) return <p>Sorry something went wrong</p>
     if (isLoading) return <MultiCardLoader count={Number(limit)} />
-    if (data.total == 0) 
-        return <p className="text-center">
-                Sorry no {tab}s were found for <b>{q}</b> 
-                <br/><br/> 
-                {tab == 'article' ? 'Use the navigation menu to see if your query matched any collections or pages.' : ''}
+    if (data.total == 0) {
+        if (tab == 'article' && (data.extra_collection_count + data.extra_page_count > 0)) {
+            return <p className="text-center">
+                We found <Link href={{ pathname: "/search", query: { ...router.query, t: "collection" } }}><a>{data.extra_collection_count} collections </a></Link> 
+                and <Link href={{ pathname: "/search", query: { ...router.query, t: "page" } }}><a>{data.extra_page_count} pages </a></Link>  
+                but no articles were found for the query <b>{q}</b>`
             </p>
+        } else {
+            return <p className="text-center">
+                Sorry no articles, collections or pages were found for were found for the query <b>{q}</b>
+            </p>
+        }
+    }
+
     if (data.pageCount < Number(page)) onPaginationChanged(1, Number(limit))
 
 
