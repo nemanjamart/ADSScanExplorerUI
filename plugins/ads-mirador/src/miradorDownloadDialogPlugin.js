@@ -8,12 +8,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import RadioGroup from '@material-ui/core/RadioGroup'
 import Radio from '@material-ui/core/Radio'
-import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 import { getCanvasLabel, getVisibleCanvases, selectInfoResponse } from 'mirador/dist/es/src/state/selectors/canvases';
 import { addError } from 'mirador/dist/es/src/state/actions'
 import { getManifestTitle } from 'mirador/dist/es/src/state/selectors'
@@ -33,7 +32,8 @@ export class MiradorDownloadDialog extends Component {
         this.state = {
             usePageRange: false,
             startPage: 1,
-            endPage: 1
+            endPage: 1,
+            DPI: 200,
         };
     }
 
@@ -45,7 +45,7 @@ export class MiradorDownloadDialog extends Component {
             headers: { 'Authorization': `Bearer ${authToken}` },
         }
 
-        let url = `${pdfUrl}?id=${title}`
+        let url = `${pdfUrl}?id=${title}&dpi=${this.state.DPI}`
         if (usePageRange) {
             url += `&page_start=${this.state.startPage}&page_end=${this.state.endPage}`
         }
@@ -126,6 +126,7 @@ export class MiradorDownloadDialog extends Component {
 
         return (
             <React.Fragment>
+
                 <Dialog
                     container={document.querySelector(`#${containerId} .mirador-viewer`)}
                     disableEnforceFocus
@@ -139,60 +140,72 @@ export class MiradorDownloadDialog extends Component {
                         <Typography variant="h2">Download Pages</Typography>
                     </DialogTitle>
                     <ScrollIndicatedDialogContent>
-                        <Box
-                            component="form"
-                            sx={{ p: 2, border: '1px dashed grey' }}
-                            autoComplete="off"
-                        >
-                            <FormControl >
-                                <form onSubmit={(e) => this.validateForm(e)} >
-                                    <FormLabel id="row-radio-buttons-group-label">Download pages</FormLabel>
-                                    <RadioGroup
-                                        row
-                                        aria-labelledby="row-radio-buttons-group-label"
-                                        name="row-radio-buttons-group"
-                                        value={this.state.usePageRange}
-                                        onChange={(event) => { this.setState({ usePageRange: event.target.value === 'true' }) }}
+                        <FormControl >
+                            <form id={"download-pages-form"} onSubmit={(e) => this.validateForm(e)} >
+                                <h5 style={{ color: '#5D5D5D' }}>Pages</h5>
+                                <RadioGroup
+                                    row
+                                    aria-labelledby="row-radio-buttons-group-label"
+                                    name="row-radio-buttons-group"
+                                    value={this.state.usePageRange}
+                                    onChange={(event) => { this.setState({ usePageRange: event.target.value === 'true' }) }}
+                                >
+                                    <FormControlLabel value={false} control={<Radio />} label="All" />
+                                    <FormControlLabel value={true} control={<Radio />} label="Range" />
+                                </RadioGroup>
+
+                                <TextField
+                                    required
+                                    inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                                    id="outlined-required"
+                                    label="Page start"
+                                    defaultValue={this.state.startPage}
+                                    style={{ width: '80%' }}
+                                    disabled={!this.state.usePageRange}
+                                    error={this.state.formError}
+                                    onChange={(e) => this.setState({ startPage: e.target.value })}
+                                />
+
+                                <TextField
+                                    required
+                                    inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                                    id="outlined-disabled"
+                                    label="Page end"
+                                    defaultValue={this.state.endPage}
+                                    style={{ width: '80%' }}
+                                    disabled={!this.state.usePageRange}
+                                    onChange={(e) => this.setState({ endPage: e.target.value })}
+                                    error={this.state.formError}
+                                    helperText={this.state.errorText}
+                                />
+                                <div>
+                                    <br />
+                                    <h5 style={{ color: '#5D5D5D' }}>Quality</h5>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={this.state.DPI}
+                                        label="DPI"
+                                        style={{ color: '#5D5D5D' }}
+                                        onChange={(e) => this.setState({ DPI: e.target.value })}
                                     >
-                                        <FormControlLabel value={false} control={<Radio />} label="All" />
-                                        <FormControlLabel value={true} control={<Radio />} label="Range" />
-                                    </RadioGroup>
+                                        <MenuItem value={200}>200 DPI</MenuItem>
+                                        <MenuItem value={600}>600 DPI</MenuItem>
+                                    </Select>
+                                </div>
 
-                                    <TextField
-                                        required
-                                        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                                        id="outlined-required"
-                                        label="Page start"
-                                        defaultValue={this.state.startPage}
-                                        style={{ width: '80%' }}
-                                        disabled={!this.state.usePageRange}
-                                        error={this.state.formError}
-                                        onChange={(e) => this.setState({ startPage: e.target.value })}
-                                    />
 
-                                    <TextField
-                                        required
-                                        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                                        id="outlined-disabled"
-                                        label="Page end"
-                                        defaultValue={this.state.endPage}
-                                        style={{ width: '80%' }}
-                                        disabled={!this.state.usePageRange}
-                                        onChange={(e) => this.setState({ endPage: e.target.value })}
-                                        error={this.state.formError}
-                                        helperText={this.state.errorText}
-                                    />
-                                    <Button type='submit' variant="contained" style={{ margin: '20px' }} >Download Pages</Button>
-                                </form>
-                            </FormControl>
-                        </Box>
+                            </form>
+                        </FormControl>
                     </ScrollIndicatedDialogContent>
                     <DialogActions>
+                        <Button type='submit' form="download-pages-form" style={{ color: '#5D5D5D' }}>Download</Button>
                         <Button onClick={closeDialog} color="primary">
                             Close
                         </Button>
                     </DialogActions>
                 </Dialog>
+
             </React.Fragment>
         );
     }
