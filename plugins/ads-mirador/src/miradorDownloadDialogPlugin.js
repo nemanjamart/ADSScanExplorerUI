@@ -32,7 +32,7 @@ export class MiradorDownloadDialog extends Component {
             usePageRange: false,
             startPage: 1,
             endPage: 1,
-            DPI: 200,
+            DPI: 600,
         };
     }
 
@@ -57,8 +57,7 @@ export class MiradorDownloadDialog extends Component {
                 const blob = await res.blob()
                 const blobUrl = URL.createObjectURL(blob);
                 window.open(blobUrl)
-
-
+                removeExternalAlert();
             }
         })
 
@@ -182,8 +181,8 @@ export class MiradorDownloadDialog extends Component {
                         </FormControl>
                     </ScrollIndicatedDialogContent>
                     <DialogActions>
-                        <Button type='submit' form="download-pages-form" style={{ color: '#5D5D5D' }}>Download</Button>
-                        <Button onClick={closeDialog} color="primary">
+                        <Button color="primary" type='submit' form="download-pages-form">Download</Button>
+                        <Button onClick={closeDialog}>
                             Close
                         </Button>
                     </DialogActions>
