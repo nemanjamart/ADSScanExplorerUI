@@ -5,13 +5,13 @@
   "scripts": {
     "dev": "next dev --port 8000",
     "build": "next build",
-    "start": "next start --port 3000",
+    "start": "next start --port 8000",
     "lint": "next lint",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "start:test": "next start --port 8000",
     "test:e2e": "playwright test",
-    "postinstall": "npx patch-package" 
+    "postinstall": "npm exec patch-package"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
