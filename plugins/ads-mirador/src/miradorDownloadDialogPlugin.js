@@ -55,8 +55,25 @@ export class MiradorDownloadDialog extends Component {
                 addError("Sorry, an error occured while generating the PDF")
             } else {
                 const blob = await res.blob()
-                const blobUrl = URL.createObjectURL(blob);
-                window.open(blobUrl)
+                var element = document.createElement('a')
+                var filename = `${title}.pdf`
+
+                if (blob) {
+
+                    element.setAttribute('href', window.URL.createObjectURL(blob));
+
+                    //set file title
+                    element.setAttribute('download', filename);
+
+                    //trigger download
+                    element.style.display = 'none';
+                    document.body.appendChild(element);
+                    element.click();
+
+                    //remove temporary link element
+                    document.body.removeChild(element);
+                }
+
                 removeExternalAlert();
             }
         })
