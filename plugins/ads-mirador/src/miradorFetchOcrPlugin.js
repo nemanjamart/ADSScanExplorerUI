@@ -25,7 +25,23 @@ class MiradorFetchOcr extends Component {
           addError('Sorry, an error occured while generating the OCR file')
         } else {
           res.blob().then((blob) => {
-            saveAs(blob, `${title}_ocr.txt`)
+            var element = document.createElement('a')
+            var filename = `${title}_ocr.txt`
+
+            if (blob) {
+              element.setAttribute('href', window.URL.createObjectURL(blob));
+
+              //set file title
+              element.setAttribute('download', filename);
+
+              //trigger download
+              element.style.display = 'none';
+              document.body.appendChild(element);
+              element.click();
+
+              //remove temporary link element
+              document.body.removeChild(element);
+          }
           })
         }
       })
