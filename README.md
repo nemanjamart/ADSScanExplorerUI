@@ -39,3 +39,9 @@ Run the tests
 ```
 npm run test:e2e
 ```
+
+
+## Pathing Mirador
+
+When upgrading Mirador, please take note that we are applying a patch to remove some features that is not possible to remove by the configuration.
+Upgrading Mirador may cause the patch to no longer function and will need to be re-created for the new version of Mirador.
